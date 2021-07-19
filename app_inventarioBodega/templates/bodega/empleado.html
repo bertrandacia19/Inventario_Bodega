@@ -8,13 +8,13 @@ EmpleadosBodega
 {% block container %}
     <div class="container" style="color: #FFFFFF">
         <h1>Empleados</h1>
-        <form action="{% url 'empleado' %}" method="post">
+        <form action="{% url 'empleado' %}" method="POST">
             {% csrf_token %}
             <div class="row mb-4">
                 <div class="col-6">
                     <div class="mb-3">
                         <label for="nombre" >Nombre</label>
-                        <input type="text" value="{{ em.nombre }}" name="nombre" id="nombre" class="form-control" required placeholder="Bad" required autofocus >
+                        <input type="text" value="{{ em.nombre }}" name="nombre" id="nombre" class="form-control" required placeholder="Bad" autofocus >
                     </div>
                 </div>
                 <div class="col-6">
@@ -61,42 +61,33 @@ EmpleadosBodega
                         <input type="submit" class="btn" style="width: 75%;height: 3.5rem;border-radius: 8px;background-color: #FC6E20;" value="Registrar">
                     </div>
                 </div>
-                <div class="col-3">
-                    <div class="mb-3">
-                        <input type="submit" class="btn btn-outline-secondary" style="width: 75%;height: 3.5rem;border-radius: 8px;" value="Salir">
-                    </div>
-                </div>
             </div> 
-            <br>
-            <hr>
-            {% if empleados %}
-                <div class="row">
-                    {% for emp in empleados %}
-                    <div class="col-3">
-                        <div class="card" style="width: 18rem; box-shadow: 3px 3px 20px 4px rgba(252,110,32,0.25);margin-right: 3px;">
-                            {% comment %} {% for e in emp.empleado.all %}
-                                <img data-bs-toggle="tooltip" title="{{ e.nombre }} {{ e.apellido }}" width="30%" src="..." alt="{{ e.nombre }}" />
-                            {% endfor %} {% endcomment %}
-                            <div class="card-body">
-                                <h5 class="card-title">{{ emp.nombre }}</h5>
-                                <p class="card-text text-secondary">
-                                    Empezo hace <strong>{{ emp.fechaIngreso | timesince }}</strong>
-                                </p>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Direccion <strong>{{ emp.direccion }}</strong></li>
-                                <li class="list-group-item">Teléfono: <strong>{{ emp.telefono }}</strong></li>
-                                <li class="list-group-item">Correo: <strong>{{ emp.correo }} </strong></li>
-
-                            </ul>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            {% else %}
-            <div class="alert alert-danger">No hay empleados al momento</div>
-            {% endif %}
+            
         </form>
+        <br>
+        <hr>
+        <div class="row">
+            {% for e in empleados %}
+                <div class="col-3">
+                    <div class="card mb-4" style="width: 17.5rem; box-shadow: 3px 3px 20px 4px rgba(252,110,32,0.25);margin-right: 3px;height: 16rem;">
+                        <div class="card-body">
+                            <h5 class="card-title " style="color: black;">{{ e.nombre }} {{ e.apellido}} </h5>
+                            <p class="card-text text-secondary">
+                                Empezo hace <strong>{{ e.fechaIngreso | timesince }}</strong>
+                            </p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" style="height:4rem;">Direccion <strong>{{ e.direccion }}</strong></li>
+                            <li class="list-group-item">Teléfono: <strong>{{ e.telefono }}</strong></li>
+                            <li class="list-group-item">Correo: <br><strong>{{ e.correo }} </strong></li>
+                        </ul>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="alert alert-danger">No hay empleados al momento</div>
+            {% endfor %}
+        </div>
+        
     </div>    
 {% endblock %}
 

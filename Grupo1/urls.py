@@ -20,5 +20,5 @@ from app_inventarioBodega import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name="index"),
-    path('bodega/empleado', views.empleados, name="empleado"),
+    path('empleado/', views.empleados, name="empleado"),
 ]
