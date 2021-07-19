@@ -7,6 +7,9 @@ def index(request):
     return render(request, 'bodega/index.html')
 
 def empleados(request):
+
+    data = Empleado.objects.all().order_by('fechaIngreso')
+
     if request.method == "POST":
         #informacion de empleados
         nombre = request.POST.get('nombre')
@@ -22,5 +25,11 @@ def empleados(request):
 
         msj = f'El Empleado {nombre} {apellido} ha sido registrado.'
 
-    empleados = Empleado.objects.all().order_by('fechaIngreso')
-    return render(request, 'bodega/empleado.html', {'empleados':empleados})
+
+    ctx = {
+        'empleados' : data,
+
+    }
+
+    
+    return render(request, 'bodega/empleado.html', ctx)
