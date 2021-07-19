@@ -6,7 +6,98 @@ EmpleadosBodega
 {% endblock %}
 
 {% block container %}
-    <h1>Empleados</h1>
+    <div class="container" style="color: #FFFFFF">
+        <h1>Empleados</h1>
+        <form action="{% url 'empleado' %}" method="post">
+            {% csrf_token %}
+            <div class="row mb-4">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="nombre" >Nombre</label>
+                        <input type="text" value="{{ em.nombre }}" name="nombre" id="nombre" class="form-control" required placeholder="Bad" required autofocus >
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="apellido" >Apellido</label>
+                        <input type="text" value="{{ em.apellido }}" name="apellido" id="apellido" class="form-control" required placeholder="Bunny">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="direccion" >Dirección</label>
+                        <input type="text" value="{{ em.direccion }}" name="direccion" id="direccion" class="form-control" required placeholder="San Juan Pueblo, La Masica, Atlántida">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="telefono" >Número de Teléfono</label>
+                        <input type="text" value="{{ em.telefono }}" name="telefono" id="telefono" class="form-control" required placeholder="98503652">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="correo" >Correo Electrónico</label>
+                        <input type="email" value="{{ em.correo }}" name="correo" id="correo" class="form-control" required placeholder="badbunnybaby@gmail.com">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="fechaIngreso" >Fecha de Ingreso</label>
+                        <input type="date" value="{{ em.fechaIngreso }}" name="fechaIngreso" id="fechaIngreso" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-3">
+                    <div class="mb-3">
+                        <input type="submit" class="btn" style="width: 75%;height: 3.5rem;border-radius: 8px;background-color: #FC6E20;" value="Registrar">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="mb-3">
+                        <input type="submit" class="btn btn-outline-secondary" style="width: 75%;height: 3.5rem;border-radius: 8px;" value="Salir">
+                    </div>
+                </div>
+            </div> 
+            <br>
+            <hr>
+            {% if empleados %}
+                <div class="row">
+                    {% for emp in empleados %}
+                    <div class="col-3">
+                        <div class="card" style="width: 18rem; box-shadow: 3px 3px 20px 4px rgba(252,110,32,0.25);margin-right: 3px;">
+                            {% comment %} {% for e in emp.empleado.all %}
+                                <img data-bs-toggle="tooltip" title="{{ e.nombre }} {{ e.apellido }}" width="30%" src="..." alt="{{ e.nombre }}" />
+                            {% endfor %} {% endcomment %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ emp.nombre }}</h5>
+                                <p class="card-text text-secondary">
+                                    Empezo hace <strong>{{ emp.fechaIngreso | timesince }}</strong>
+                                </p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Direccion <strong>{{ emp.direccion }}</strong></li>
+                                <li class="list-group-item">Teléfono: <strong>{{ emp.telefono }}</strong></li>
+                                <li class="list-group-item">Correo: <strong>{{ emp.correo }} </strong></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+            <div class="alert alert-danger">No hay empleados al momento</div>
+            {% endif %}
+        </form>
+    </div>    
 {% endblock %}
 
 
