@@ -6,7 +6,68 @@ EmpleadosBodega
 {% endblock %}
 
 {% block container %}
-    <h1>Empleados</h1>
+    <div class="container" style="color: #FFFFFF">
+        <h1>Empleados</h1>
+        <form action="" method="post">
+            <div class="row mb-4">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="nombre" >Nombre</label>
+                        <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Bad" required autofocus >
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="apellido" >Apellido</label>
+                        <input type="text" name="apellido" id="apellido" class="form-control" placeholder="Bunny">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="direccion" >Dirección</label>
+                        <input type="text" name="direccion" id="direccion" class="form-control" placeholder="San Juan Pueblo, La Masica, Atlántida">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="telefono" >Número de Teléfono</label>
+                        <input type="text" name="telefono" id="telefono" class="form-control" placeholder="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="correo" >Correo Electrónico</label>
+                        <input type="email" name="correo" id="correo" class="form-control" placeholder="">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="fechaIngreso" >Fecha de Ingreso</label>
+                        <input type="date" name="fechaIngreso" id="fechaIngreso" class="form-control" placeholder="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-3">
+                    <div class="mb-3">
+                        <input type="submit" class="btn" style="width: 75%;height: 3.5rem;border-radius: 8px;background-color: #FC6E20;" value="Registrar">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="mb-3">
+                        <input type="submit" class="btn btn-outline-secondary" style="width: 75%;height: 3.5rem;border-radius: 8px;" value="Salir">
+                    </div>
+                </div>
+            </div>  
+        </form>
+    </div>    
 {% endblock %}
 
 
