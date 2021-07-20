@@ -21,7 +21,6 @@ class Bodega(models.Model):
 
     nombre = models.CharField(max_length=30)
     direccion = models.TextField()
-    capacidad = models.IntegerField()
     encargado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
 
     def __str__(self):
