@@ -6,7 +6,6 @@ from .models import Bodega,Empleado
 def index(request):
     return render(request, 'bodega/index.html')
 
-
 @login_required()
 def bodega(request):
     data = Bodega.objects.all().order_by('nombre')
