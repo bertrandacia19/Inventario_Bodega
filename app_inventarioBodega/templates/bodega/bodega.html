@@ -11,25 +11,22 @@
         <form action="{% url 'inventario:bodega' %}" method="POST">
             {% csrf_token %}
             <div class="row mb-4">
-                <div class="col-6">
+                <div class="col-4">
                     <div class="mb-3">
                         <label for="nombre" >Nombre</label>
                         <input type="text" value="{{ b.nombre }}" name="nombre" id="nombre" class="form-control" required placeholder="Nombre de la bodega" autofocus >
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     <div class="mb-3">
                         <label for="direccion" >Direccion</label>
                         <input type="text" value="{{ b.direccion }}" name="direccion" id="direccion" class="form-control" required placeholder="Calle 13 frente al boulevard las Torres">
                     </div>
                 </div>
-            </div>
-
-            <div class="row mb-4">
-                <div class="col-6">
+                <div class="col-3">
                     <div class="mb-3">
                         <label for="encargado" >Encargado</label>
-                        <select name="encargado" id="encargado" style="width:15rem; height:2rem;">
+                        <select name="encargado" id="encargado" style="width:15rem; height:2.5rem; border-radius: 8px;">
                         {% for e in emp %}
                             <option value="{{e.id}}">{{e.nombre}} {{e.apellido}}</option>
                         {% endfor %}
@@ -37,7 +34,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="row mb-4">
                 <div class="col-3">
                     <div class="mb-3">
@@ -50,24 +46,22 @@
         <br>
         <hr>
         <div class="row">
-            {% for bo in bodega %}
-                <div class="col-3">
-                    <div class="card mb-4" style="width: 17.5rb; box-shadow: 3px 3px 20px 4px rgba(252,110,32,0.25);margin-right: 3px;height: 16rb;">
+             {% for b in bodega %}
+                <div class="col-3" style="margin-right:15px">
+                    <div class="card mb-4" style="width: 17.5rem; box-shadow: 3px 3px 20px 4px rgba(252,110,32,0.25);margin-right: 3px;height: 16rem;">
                         <div class="card-body">
-                            <h5 class="card-title " style="color: black;">{{ bo.nombre }} {{ bo.direccion}} </h5>
-                            <p class="card-text text-secondary">
-                                <strong>{{ bo.encargado | timesince }}</strong>
-                            </p>
+                            <h5 class="card-title " style="color: black; margin-left: 80px; margin-top: 10px;">BODEGA </h5>
+                            <h5 class="card-title " style="color: black; margin-left: 40px; margin-top: 10px;">{{ b.nombre }} </h5>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Dirección: <strong>{{ b.direccion }}</strong></li>
+                                <li class="list-group-item">Encargado: <strong>{{ b.encargado }} </strong></li>
+                            </ul>
                         </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-itb" style="height:4rb;">Nombre: <strong>{{ bo.nombre }}</strong></li>
-                            <li class="list-group-itb" style="height:4rb;">Dirección: <strong>{{ bo.direccion }}</strong></li>
-                            <li class="list-group-itb">Encargado: <strong>{{ bo.encargado }}</strong></li>
-                        </ul>
+                        
                     </div>
                 </div>
             {% empty %}
-                <div class="alert alert-danger">Sin resultados</div>
+                <div class="alert alert-danger">No hay bodegas registradas</div>
             {% endfor %}
         </div>
         

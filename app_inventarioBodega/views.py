@@ -14,14 +14,18 @@ def bodega(request):
     if request.method == "POST":
         nombre = request.POST.get('nombre')
         direccion = request.POST.get('direccion')
-        empleados = get_object_or_404(Empleado, pk=request.POST.get('encargado'))
+        encargado = get_object_or_404(Empleado, pk=request.POST.get('encargado'))
 
-        b = Bodega(nombre=nombre, direccion=direccion, encargado=empleados)
+        b = Bodega(nombre=nombre, direccion=direccion, encargado=encargado)
         b.save() 
 
         msj = f'Bodega registrada exitosamente'
+
+        
+    activo = 'bodega'
     ctx = {
-        'b' : data,
+        'activo': activo,
+        'bodega' : data,
         'emp': emp,
     }
     return render(request, 'bodega/bodega.html', ctx)

@@ -14,7 +14,7 @@ class Empleado(models.Model):
     fechaIngreso = models.DateField()
 
     def __str__(self):
-        return self.nombre
+        return f'{self.nombre} {self.apellido}'
 
 
 class Bodega(models.Model):
