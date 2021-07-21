@@ -25,9 +25,10 @@ def empleados(request):
 
         msj = f'El Empleado {nombre} {apellido} ha sido registrado.'
 
-
+    activo = 'empleado'
     ctx = {
         'empleados' : data,
+        'activo' : activo,
 
     }
 
