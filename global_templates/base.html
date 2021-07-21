@@ -17,6 +17,7 @@
               </button>
               <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
+                  <a class="nav-link {% if activo == 'empleado' %}active{% endif %}" href="{% url 'inventario:empleado' %}" class="nav-link">Empleado</a>
                   <a class="nav-link {% if activo == 'bodega' %}active{% endif %}" href="{% url 'inventario:bodega' %}" class="nav-link">Bodega</a>
                   <a class="nav-link" href="{% url 'logout_view' %}">Salir</a>
                 </div>
