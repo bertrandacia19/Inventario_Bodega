@@ -59,22 +59,16 @@ class Producto(models.Model):
     def __str__(self):
         return self.nombre
 
-'''class Transferencia(models.Model):
+class Transferencia(models.Model):
 
-    TIPO = (
-        ('1', 'Transferencia'),
-        ('2', 'Orden de venta'),
-        ('3', 'Orden de compra'),
-    )
-
-    tipoTransferencia = models.CharField(max_length=1, choices=TIPO, default='1')
-    ordenCompra = models.IntegerField(null=True, blank=True)
-    precioCompra = models.FloatField(null=True, blank=True)
-    precioVenta = models.FloatField(null=True, blank=True)
-    precioTransferencia = models.FloatField()
+    ordenTransferencia = models.CharField(max_length=5) 
+    producto = models.ForeignKey(Producto,related_name="producto" ,on_delete=models.CASCADE)
+    cantidadProducto = models.IntegerField()
+    PrecioProducto = models.IntegerField()
+    totalTransferencia = models.FloatField()
     bodegaOrigen = models.ForeignKey(Bodega,related_name="bodegaOrigen" ,on_delete=models.CASCADE)
     bodegaDestino = models.ForeignKey(Bodega,related_name="bodegaDestino" ,on_delete=models.CASCADE, null=True, blank=True)
     fecha = models.DateField()
 
     def __str__(self):
-        return f'{self.tipoTransferencia}'''
+        return f'{self.ordenTransferencia}'
