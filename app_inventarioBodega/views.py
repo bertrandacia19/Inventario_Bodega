@@ -4,3 +4,6 @@ from django.shortcuts import render
 
 def index(request):
     return render(request, 'bodega/index.html')
+
+def base(request):
+    return render(request, "global_templates/base.html")
