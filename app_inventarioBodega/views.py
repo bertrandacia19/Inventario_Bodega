@@ -21,21 +21,18 @@ def empleados(request):
         correo = request.POST.get('correo')
         fechaIngreso = request.POST.get('fechaIngreso')
 
-#em = empleados
         em = Empleado(nombre=nombre, apellido=apellido, direccion=direccion, telefono=telefono, correo=correo, fechaIngreso=fechaIngreso)
         em.save() #insert a la base de datos
 
         msj = f'El Empleado {nombre} {apellido} ha sido registrado.'
 
-    activo = 'empleado'
     ctx = {
         'empleados' : data,
-        'activo' : activo,
 
     }
 
     
-    return render(request, 'bodega/empleado.html', ctx)
+    return render(request, 'bodega/empleados.html', ctx)
 
 
 
@@ -55,9 +52,7 @@ def bodega(request):
         msj = f'Bodega registrada exitosamente'
 
         
-    activo = 'bodega'
     ctx = {
-        'activo': activo,
         'bodega' : data,
         'emp': emp,
     }

@@ -8,7 +8,7 @@ EmpleadosBodega
 {% block container %}
     <div class="container" style="color: #FFFFFF">
         <h1>Empleados</h1>
-        <form action="{% url 'empleado' %}" method="POST">
+        <form action="{% url 'inventario:empleados' %}" method="POST">
             {% csrf_token %}
             <div class="row mb-4">
                 <div class="col-6">

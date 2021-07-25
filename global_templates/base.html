@@ -23,16 +23,16 @@
         
           <div class="sidebar">
             <di class="toggle-btn" onclick="toggleSidebar()"></di>
-            <header>Bodega Comedera</header>
+            <a href="{% url 'inventario:index' %}" class="as" style="text-decoration: none;"><header>Bodega Comedera</header></a>
             <ul>
     
-                <li><a href="#" class="links"><i class="fas fa-user-plus"></i>Empleados</a></li>
-                <li><a href="#" class="links"><i class="fas fa-warehouse"></i>Bodegas</a></li>
+                <li><a href="{% url 'inventario:empleados' %}" class="links"><i class="fas fa-user-plus"></i>Empleados</a></li>
+                <li><a href="{% url 'inventario:bodega' %}" class="links"><i class="fas fa-warehouse"></i>Bodegas</a></li>
                 <li><a href="#" class="links"><i class="fas fa-boxes"></i>Productos</a></li>
                 <li><a href="#" class="links"><i class="fas fa-cart-plus"></i>Nuevos Productos</a></li>
                 <li><a href="#" class="links"><i class="fas fa-shipping-fast"></i>Transferencias</a></li>
                 <li><a href="#" class="links"><i class="fas fa-cash-register"></i>Venta de Productos</a></li>
-                <li><a href="#" class="links"><i class="fas fa-sign-out-alt"></i>Salir</a></li>
+                <li><a href="{% url 'logout_view' %}" class="links"><i class="fas fa-sign-out-alt"></i>Salir</a></li>
             
             </ul>
           </div>

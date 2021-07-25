@@ -1,6 +1,7 @@
 body, html{
     background-color: #1B1B1B;
     color: #FFFFFF;
+    text-decoration: none;
 }
 
 *{
@@ -22,4 +23,10 @@ body, html{
     box-shadow: 3px 3px 20px 4px rgba(252,110,32,0.25);
     margin-right: 3px;
     height: 16rem;
+}
+.as{
+    text-decoration: none;
+}
+a{
+    text-decoration: none;
 }
