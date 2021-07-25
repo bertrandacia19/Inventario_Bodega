@@ -7,7 +7,7 @@
         <div class="col-10">
         <!----------Tabla que muestra todos los productos------------------------------>
             <form action="" method="get">
-                <input type="search" name="" value="" class="form-control" placeholder="Buscar productos">
+                <input type="search" name="q" value="{{ q|default_if_none:'' }}" class="form-control" placeholder="Buscar productos">
             </form>
 
             <h2 class="mt-3"></h2>
@@ -29,12 +29,16 @@
                     <tr>
                         <td>{{p.nombre}}</td>
                         <td>{{p.categoria}}</td>
-                        <td>{{p.unidad_medidas}}</td>
+                        <td>{{p.unidades_medidas}}</td>
                         <td>{{p.proveedor}}</td>
                         <td>{{p.cantidad}}</td>
                         <td>{{p.precio_compra}}</td>
                         <td>{{p.precio_venta}}</td>
                         <td>{{p.bodega}}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="10" class="text-danger text-center">No se encontraron resultados</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -49,9 +53,15 @@
         <div class="col-2">
             <div class="card mb-4" style="width: 17.5rem; box-shadow: 3px 3px 20px 4px rgba(252,110,32,0.25);margin-right: 3px;height: 22rem;">
                 <div class="card-body">
-                    <h5 class="card-title " style="color: black;">Nombre de Producto aqui</h5>
+                    {% if q %}
+                        {% for p in productos %}
+                        <h5 class="card-title" style="color: black;">{{p.nombre}}</h5>
+                        {% endfor %}
+                    {% else %}
+                    <h5 class="card-title" style="color: black;">Nombre del Producto</h5>
+                    {% endif %}
                     <p class="card-text text-secondary">
-                        Codigo: <strong> # </strong>
+                        Codigo: <strong>#</strong>
                     </p>
                 </div>
                 <ul class="list-group list-group-flush">

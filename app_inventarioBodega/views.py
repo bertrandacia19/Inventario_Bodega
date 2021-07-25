@@ -1,5 +1,5 @@
 from django.http.response import HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from .models import Producto, Bodega
 
 def nuevoProducto(request):
@@ -21,9 +21,19 @@ def nuevoProducto(request):
         p.save()
 
         return JsonResponse({'color':'success','msj':'Se a guardado el producto exitosamente.'})
-    bodegas = Bodega.objects.all()
-    productos = Producto.objects.all()
-    return render(request, 'bodega/nuevoProducto.html', {'productos':productos, 'bodega':bodegas})
+    
+    q = request.GET.get('q')
+
+    if q:
+        productos = Producto.objects.filter(nombre__startswith=q).order_by('nombre')
+    else:
+        productos = Producto.objects.all()
+    ctx ={
+        'productos': productos,
+        'q': q,
+        'bodega': Bodega.objects.all(),
+    }
+    return render(request, 'bodega/nuevoProducto.html', ctx)
 
 def cantidadProducto(request):
     if request.method == 'POST':
@@ -36,7 +46,16 @@ def cantidadProducto(request):
         add_producto.save()
         
         return JsonResponse({'color':'success','msj':'Se a agregado al producto existosamente.'})
+    
+    q = request.GET.get('q')
 
-    productos = Producto.objects.all()
-    return render(request, 'bodega/cantidadProducto.html', {'productos':productos})
+    if q:
+        productos = Producto.objects.filter(nombre__startswith=q).order_by('nombre')
+    else:
+        productos = Producto.objects.all()
+    ctx ={
+        'productos': productos,
+        'q': q,
+    }
+    return render(request, 'bodega/cantidadProducto.html', ctx)
 
