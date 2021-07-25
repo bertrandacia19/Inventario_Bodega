@@ -9,7 +9,7 @@ class BodegaAdmin(admin.ModelAdmin):
     list_display = ('id', 'nombre', 'encargado',)
 
 class ProductoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'nombre', 'categoria','stock','cantidad','precio','bodega')
+    list_display = ('id', 'nombre', 'categoria','stock','cantidad','precio_compra','precio_compra','bodega')
 
 class TransferenciaAdmin(admin.ModelAdmin):
     list_display = ('id', 'ordenTransferencia', 'producto', 'cantidadProducto', 'PrecioProducto', 'totalTransferencia', 'bodegaOrigen', 'bodegaDestino', 'fecha')

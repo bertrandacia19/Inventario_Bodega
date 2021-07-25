@@ -53,7 +53,8 @@ class Producto(models.Model):
     unidades_medidas = models.CharField(max_length=1, choices=MEDIDAS, default='1')
     stock = models.IntegerField() 
     cantidad = models.IntegerField()
-    precio = models.FloatField()
+    precio_compra = models.FloatField()
+    precio_venta = models.FloatField()
     bodega = models.ForeignKey(Bodega, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -70,7 +71,7 @@ class Transferencia(models.Model):
     bodegaDestino = models.ForeignKey(Bodega,related_name="bodegaDestino" ,on_delete=models.CASCADE, null=True, blank=True)
     fecha = models.DateField()
 
-    def __str__(self):
+    def _str_(self):
         return f'{self.ordenTransferencia}'
 
 class Venta(models.Model):
@@ -84,5 +85,5 @@ class Venta(models.Model):
     totalVenta = models.FloatField()
     fecha = models.DateField()
 
-    def _str_(self):
+    def str(self):
         return f'{self.ordenVenta}'
