@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.fields import FloatField
 
 
 
@@ -52,9 +53,9 @@ class Producto(models.Model):
     nombre = models.CharField(max_length=30)
     categoria = models.CharField(max_length=1, choices=CATEGORIAS, default='1')
     unidades_medidas = models.CharField(max_length=1, choices=MEDIDAS, default='1')
-    stock = models.IntegerField() 
     cantidad = models.IntegerField()
-    precio = models.FloatField()
+    precio_compra = models.FloatField() #precio por unidad
+    precio_venta = models.FloatField()
     bodega = models.ForeignKey(Bodega, on_delete=models.CASCADE)
 
     def __str__(self):
