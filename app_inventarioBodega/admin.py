@@ -9,7 +9,7 @@ class BodegaAdmin(admin.ModelAdmin):
     list_display = ('id', 'nombre', 'encargado',)
 
 class ProductoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'nombre', 'categoria','stock','cantidad','precio','bodega')
+    list_display = ('id', 'nombre', 'categoria','cantidad','precio_compra', 'precio_venta','bodega')
 
 admin.site.register(Empleado,EmpleadoAdmin)
 

@@ -57,7 +57,8 @@ class Producto(models.Model):
     precio_compra = models.FloatField() #precio por unidad
     precio_venta = models.FloatField()
     bodega = models.ForeignKey(Bodega, on_delete=models.CASCADE)
-
+    
+    
     def __str__(self):
         return self.nombre
 
