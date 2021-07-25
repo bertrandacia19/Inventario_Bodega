@@ -19,4 +19,6 @@ from app_inventarioBodega import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('NuevoProducto/',views.nuevoProducto, name="nuevoProducto"),
+    path('CantidadProducto/',views.cantidadProducto, name="cantidadProducto"),
 ]

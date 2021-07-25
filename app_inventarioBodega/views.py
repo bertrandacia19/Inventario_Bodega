@@ -2,7 +2,7 @@ from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render
 from .models import Producto, Bodega
 
-def producto_nuevo(request):
+def nuevoProducto(request):
     if request.method == 'POST':
         nombre = request.POST.get('p-nombre')
         categoria = int(request.POST.get('p-categoria'))
@@ -23,9 +23,9 @@ def producto_nuevo(request):
 
     bodegas = Bodega.objects.all()
     productos = Producto.objects.all()
-    return render(request, 'bodega/producto.html', {'productos':productos, 'bodega':bodegas})
+    return render(request, 'bodega/nuevoProducto.html', {'productos':productos, 'bodega':bodegas})
 
-def producto_agregar(request):
+def cantidadProducto(request):
     if request.method == 'POST':
         id_producto = int(request.POST.get('id_producto'))
         add_cantidad = int(request.POST.get('cantidad'))
@@ -38,5 +38,5 @@ def producto_agregar(request):
         return JsonResponse({'color':'success','msj':'Se a agregado al producto existosamente.'})
 
     productos = Producto.objects.all()
-    return render(request, 'bodega/nuevoProducto', {'productos':productos})
+    return render(request, 'bodega/cantidadProducto', {'productos':productos})
 

@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Nuevo Producto
+{% endblock %}
+
+{% block container %}
+    <div class="row">
+        <div class="col-2">
+            <!---<form action="" method="post"> --->
+            <form action="" method="post">
+                <div class="mb-3">
+                    <label for="producto">Producto</label><br>
+                    <input type="text" value="" name="producto" id="producto" class="form-control" required autofocus>
+                </div>
+
+                <div class="mb-3">
+                    <label for="categoria">Categoria</label><br>
+                    <select name="categoria" id="categoria" class="form-control">
+                        <option value="1">Lacteos</option>
+                        <option value="2">Carnes</option>
+                        <option value="3">Bebidas</option>
+                        <option value="4">Limpieza</option>
+                        <option value="5">Abarrotes</option>
+                        <option value="6">Enlatados</option>
+                        <option value="7">Granos</option>
+                        <option value="8">Dulces</option>
+                        <option value="9">Otros</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="unidad">Unidad de medida</label><br>
+                    <select name="unidad" id="unidad" class="form-control">
+                        <option value="1">Libras</option>
+                        <option value="2">Kilos</option>
+                        <option value="3">Cajas</option>
+                        <option value="4">Docena</option>
+                        <option value="5">Media Docena</option>
+                        <option value="6">Quintal</option>
+                        <option value="7">Litros</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="proveedor">Proveedor</label><br>
+                    <input type="text" value="" name="proveedor" id="proveedor" class="form-control" required autofocus>
+                </div>
+
+                <div class="mb-3">
+                    <label for="precioVenta">Precio de Venta</label><br>
+                    <input type="number" name="precioVenta" id="precioVenta" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="precioCompra">Precio de Compra</label><br>
+                    <input type="number" name="precioCompra" id="precioCompra" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="cantidad">Cantidad</label><br>
+                    <input type="number" name="cantidad" id="cantidad" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="bodega">Bodega</label><br>
+                    <select name="bodega" id="bodega" class="form-control">
+                        {% for b in bodega %}
+                            <option value="{{b.id}}">Nombre:{{b.nombre}} - Capacidad:{{b.capacidad}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            
+                <div class="mb-3">
+                    <input type="submit" class="btn btn-success" value="Registrar Producto">
+                </div>
+            </form>
+        </div>
+
+        <!----------Tabla que muestra todos los productos------------------------------>
+        <div class="col-10">
+            <form action="" method="get">
+                <input type="search" name="" value="" class="form-control" placeholder="Buscar productos">
+            </form>
+
+            <h2 class="mt-3"><!--funcion para contar numero de productos registrados--></h2>
+            <table class="table table-hover table-dark table-striped">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Categoria</th>
+                        <th>Unidad de Medida</th>
+                        <th>Proveedor</th>
+                        <th>Precio de Venta</th>
+                        <th>Precio de Compra</th>
+                        <th>Cantidad</th>
+                        <th>Bodega</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>6</td>
+                        <td>7</td>
+                        <td>8</td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    
+
+{% endblock %}

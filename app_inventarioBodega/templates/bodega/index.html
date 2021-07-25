@@ -1,13 +1,120 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  
+
 {% endblock %}
 
 {% block container %}
-    <h1>Pagina Principal</h1>
-{% endblock  %}
+    <h1>Inicio Bodega</h1>
+
+    <div class="row mt-4">
+        <div class="col-3">
+            <div class="card mb-4"
+                style="width: 17.5rem; box-shadow: 3px 3px 20px 4px rgba(252,110,32,0.25);margin-right: 3px;height: 16rem;">
+                <div class="card-body" style="color: black;">
+                    <i class="fas fa-user-plus fa-7x " style="margin-left: 68px; margin-top: 15px;"></i>
+
+                </div>
+                <ul class="list-group list-group-flush">
+
+
+                    <li class="list-group-item"><a href="#" class="btn"
+                            style="width: 100%;height: 3.5rem;border-radius: 8px;background-color: #FC6E20; padding: 13px;">Empleados</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="card mb-4"
+                style="width: 17.5rem; box-shadow: 3px 3px 20px 4px rgba(252,110,32,0.25);margin-right: 3px;height: 16rem;">
+                <div class="card-body"  style="color: black;" >
+                    <i class="fas fa-warehouse fa-7x " style="margin-left: 53px; margin-top: 15px;"></i>
+
+                </div>
+                <ul class="list-group list-group-flush">
+
+                    <li class="list-group-item"><a href="#" class="btn"
+                            style="width: 100%;height: 3.5rem;border-radius: 8px;background-color: #FC6E20; padding: 13px;">Bodegas</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="card mb-4"
+                style="width: 17.5rem; box-shadow: 3px 3px 20px 4px rgba(252,110,32,0.25);margin-right: 3px;height: 16rem;">
+                <div class="card-body"  style="color: black;">
+                    <i class="fas fa-boxes fa-7x " style="margin-left: 64px; margin-top: 15px;"></i>
+
+
+                </div>
+                <ul class="list-group list-group-flush">
+
+                    <li class="list-group-item"><a href="{% url 'cantidadProducto' %}" class="btn"
+                            style="width: 100%;height: 3.5rem;border-radius: 8px;background-color: #FC6E20; padding: 13px;">Productos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="card mb-4"
+                style="width: 17.5rem; box-shadow: 3px 3px 20px 4px rgba(252,110,32,0.25);margin-right: 3px;height: 16rem;">
+                <div class="card-body"  style="color: black;">
+                    <i class="fas fa-cart-plus fa-7x " style="margin-left: 55px; margin-top: 15px;"></i>
+
+
+                </div>
+                <ul class="list-group list-group-flush">
+
+                    <li class="list-group-item"><a href="{% url 'nuevoProducto' %}" class="btn"      
+                            style="width: 100%;height: 3.5rem;border-radius: 8px;background-color: #FC6E20; padding: 13px;">Nuevos Productos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div class="row mt-4">
+        <div class="col-3" style="margin-left: 25%;">
+            <div class="card mb-4"
+                style="width: 17.5rem; box-shadow: 3px 3px 20px 4px rgba(252,110,32,0.25);margin-right: 3px;height: 16rem;">
+                <div class="card-body"  style="color: black;">
+                    <i class="fas fa-shipping-fast fa-7x " style="margin-left: 54px; margin-top: 15px;"></i>
+
+
+                </div>
+                <ul class="list-group list-group-flush">
+
+                    <li class="list-group-item"><a href="#" class="btn"
+                            style="width: 100%;height: 3.5rem;border-radius: 8px;background-color: #FC6E20; padding: 13px;">Transferencias</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="card mb-4"
+                style="width: 17.5rem; box-shadow: 3px 3px 20px 4px rgba(252,110,32,0.25);margin-right: 3px;height: 16rem;">
+                <div class="card-body"  style="color: black;">
+                    <i class="fas  fa-cash-register fa-7x " style="margin-left: 69px; margin-top: 15px;"></i>
+
+
+                </div>
+                <ul class="list-group list-group-flush">
+
+                    <li class="list-group-item"><a href="#" class="btn"
+                            style="width: 100%;height: 3.5rem;border-radius: 8px;background-color: #FC6E20; padding: 13px;">Venta de Productos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
 
 {% block js %}
-  
+
 {% endblock js %}
