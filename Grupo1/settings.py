@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app_inventarioBodega',
+    'app_seguridad',
 ]
 
 MIDDLEWARE = [
@@ -104,9 +105,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Tegucigalpa'
 
 USE_I18N = True
 
@@ -114,6 +115,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+LOGIN_REDIRECT_URL = '/financiera/'
+LOGIN_URL = '/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -125,3 +128,7 @@ STATIC_ROOT = BASE_DIR / 'static'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
