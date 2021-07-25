@@ -53,9 +53,11 @@ class Producto(models.Model):
     categoria = models.CharField(max_length=1, choices=CATEGORIAS, default='1')
     unidades_medidas = models.CharField(max_length=1, choices=MEDIDAS, default='1')
     cantidad = models.IntegerField()
+    proveedor = models.CharField(max_length=50, blank=True, null=True)
     precio_compra = models.FloatField() #precio por unidad
     precio_venta = models.FloatField()
     bodega = models.ForeignKey(Bodega, on_delete=models.CASCADE)
+    apelllido = models.CharField(max_length=30)
 
     def __str__(self):
         return self.nombre
