@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+<!-- bloques de plantilla -->
+
+{% block title %}
+EmpleadosBodega
+{% endblock %}
+
+{% block container %}
+    <div class="container" style="color: #FFFFFF">
+        <h1>Empleados</h1>
+        <form action="{% url 'inventario:empleados' %}" method="POST">
+            {% csrf_token %}
+            <div class="row mb-4">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="nombre" >Nombre</label>
+                        <input type="text" value="{{ em.nombre }}" name="nombre" id="nombre" class="form-control" required placeholder="Pablo" autofocus >
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="apellido" >Apellido</label>
+                        <input type="text" value="{{ em.apellido }}" name="apellido" id="apellido" class="form-control" required placeholder="Escobar">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="direccion" >Dirección</label>
+                        <input type="text" value="{{ em.direccion }}" name="direccion" id="direccion" class="form-control" required placeholder="San Juan Pueblo, La Masica, Atlántida">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="telefono" >Número de Teléfono</label>
+                        <input type="text" value="{{ em.telefono }}" name="telefono" id="telefono" class="form-control" required placeholder="98503652">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="correo" >Correo Electrónico</label>
+                        <input type="email" value="{{ em.correo }}" name="correo" id="correo" class="form-control" required placeholder="Elpatrono@gmail.com">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="fechaIngreso" >Fecha de Ingreso</label>
+                        <input type="date" value="{{ em.fechaIngreso }}" name="fechaIngreso" id="fechaIngreso" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-3">
+                    <div class="mb-3">
+                        <input type="submit" class="btn" style="width: 75%;height: 3.5rem;border-radius: 8px;background-color: #FC6E20;" value="Registrar">
+                    </div>
+                </div>
+            </div> 
+            
+        </form>
+        <br>
+        <hr>
+        <div class="row">
+            {% for e in empleados %}
+                <div class="col-3">
+                    <div class="card mb-4" style="width: 17.5rem; box-shadow: 3px 3px 20px 4px rgba(252,110,32,0.25);margin-right: 3px;height: 16rem;">
+                        <div class="card-body">
+                            <h5 class="card-title " style="color: black;">{{ e.nombre }} {{ e.apellido}} </h5>
+                            <p class="card-text text-secondary">
+                                Empezo hace <strong>{{ e.fechaIngreso | timesince }}</strong>
+                            </p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" style="height:4rem;">Direccion <strong>{{ e.direccion }}</strong></li>
+                            <li class="list-group-item">Teléfono: <strong>{{ e.telefono }}</strong></li>
+                            <li class="list-group-item">Correo: <br><strong>{{ e.correo }} </strong></li>
+                        </ul>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="alert alert-danger">No hay empleados al momento</div>
+            {% endfor %}
+        </div>
+        
+    </div>    
+{% endblock %}
+
+
+{% block js %}
+    
+{% endblock %}
+    

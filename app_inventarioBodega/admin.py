@@ -6,7 +6,7 @@ class EmpleadoAdmin(admin.ModelAdmin):
     list_display = ('id', 'nombre', 'apellido', 'correo','fechaIngreso')
 
 class BodegaAdmin(admin.ModelAdmin):
-    list_display = ('id', 'nombre', 'encargado',)
+    list_display = ('id', 'nombre', 'direccion' ,'encargado',)
 
 class ProductoAdmin(admin.ModelAdmin):
     list_display = ('id', 'nombre', 'categoria','stock','cantidad','precio','bodega')
