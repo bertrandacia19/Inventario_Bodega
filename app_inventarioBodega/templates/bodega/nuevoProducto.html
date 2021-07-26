@@ -7,12 +7,11 @@ Nuevo Producto
 {% block container %}
     <div class="row">
         <div class="col-2">
-            <!---<form action="" method="post"> --->
             <form action="" method="post">
                 {% csrf_token %}
                 <div class="mb-3">
                     <label for="producto">Producto</label><br>
-                    <input type="text" value="" name="nombre" id="nombre" class="form-control" required autofocus>
+                    <input type="text" value="" name="nombre" id="nombre" class="form-control" autocomplete="off" required autofocus>
                 </div>
 
                 <div class="mb-3">
@@ -44,7 +43,7 @@ Nuevo Producto
 
                 <div class="mb-3">
                     <label for="proveedor">Proveedor</label><br>
-                    <input type="text" value="" name="proveedor" id="proveedor" class="form-control" required autofocus>
+                    <input type="text" value="" name="proveedor" id="proveedor" class="form-control" autocomplete="off" required autofocus>
                 </div>
 
                 <div class="mb-3">
@@ -77,13 +76,11 @@ Nuevo Producto
             </form>
         </div>
 
-        <!----------Tabla que muestra todos los productos------------------------------>
+        {% comment %} Tabla que muestra todos los productos {% endcomment %}
         <div class="col-10">
             <form action="" method="get">
-                <input type="search" name="" value="" class="form-control" placeholder="Buscar productos">
-            </form>
-
-            <h2 class="mt-3"><!--funcion para contar numero de productos registrados--></h2>
+                <input type="search" name="q" value="{{ q|default_if_none:'' }}" class="form-control" autocomplete="off" placeholder="Buscar productos">
+            </form><br>
             <table class="table table-hover table-dark table-striped">
                 <thead>
                     <tr>
@@ -103,12 +100,16 @@ Nuevo Producto
                     <tr>
                         <td>{{p.nombre}}</td>
                         <td>{{p.categoria}}</td>
-                        <td>{{p.unidad_medidas}}</td>
+                        <td>{{p.unidades_medidas}}</td>
                         <td>{{p.proveedor}}</td>
                         <td>{{p.cantidad}}</td>
                         <td>{{p.precio_compra}}</td>
                         <td>{{p.precio_venta}}</td>
                         <td>{{p.bodega}}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="10" class="text-danger text-center">No se encontraron resultados</td>
                     </tr>
                     {% endfor %}
                 </tbody>

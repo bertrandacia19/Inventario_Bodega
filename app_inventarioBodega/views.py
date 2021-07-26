@@ -1,5 +1,5 @@
 from django.http.response import HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from .models import Producto, Bodega
 
 def nuevoProducto(request):
@@ -21,22 +21,53 @@ def nuevoProducto(request):
         p.save()
 
         return JsonResponse({'color':'success','msj':'Se a guardado el producto exitosamente.'})
-    bodegas = Bodega.objects.all()
-    productos = Producto.objects.all()
-    return render(request, 'bodega/nuevoProducto.html', {'productos':productos, 'bodega':bodegas})
+    
+    q = request.GET.get('q')
+
+    if q:
+        productos = Producto.objects.filter(nombre__startswith=q).order_by('nombre')
+    else:
+        productos = Producto.objects.all()
+    ctx ={
+        'productos': productos,
+        'q': q,
+        'bodega': Bodega.objects.all(),
+    }
+    return render(request, 'bodega/nuevoProducto.html', ctx)
 
 def cantidadProducto(request):
+    
+    q = request.GET.get('q')
+
+    if q:
+        productos = Producto.objects.filter(nombre__startswith=q).order_by('nombre')
+    else:
+        productos = Producto.objects.all()
+    ctx ={
+        'productos': productos,
+        'q': q,
+    }
+    return render(request, 'bodega/cantidadProducto.html', ctx)
+
+def actualizarProducto(request, id):
+    p = get_object_or_404(Producto, pk=id)
+
     if request.method == 'POST':
-        id_producto = int(request.POST.get('id_producto'))
         add_cantidad = int(request.POST.get('cantidad'))
 
-        add_producto = Producto.objects.get(pk=id_producto)
+        add_producto = Producto.objects.get(pk=id)
 
         add_producto.cantidad += add_cantidad
         add_producto.save()
         
         return JsonResponse({'color':'success','msj':'Se a agregado al producto existosamente.'})
 
-    productos = Producto.objects.all()
-    return render(request, 'bodega/cantidadProducto.html', {'productos':productos})
+    data = Producto.objects.all()
+
+    ctx = {
+        'productos': data,
+        'p': p
+    }
+
+    return render(request, 'bodega/cantidadProducto.html', ctx)
 

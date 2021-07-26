@@ -5,9 +5,9 @@
 {% block container %}
     <div class="row">
         <div class="col-10">
-        <!----------Tabla que muestra todos los productos------------------------------>
+        {% comment %} Tabla que muestra todos los productos {% endcomment %}
             <form action="" method="get">
-                <input type="search" name="" value="" class="form-control" placeholder="Buscar productos">
+                <input type="search" name="q" value="{{ q|default_if_none:'' }}" class="form-control" placeholder="Buscar productos">
             </form>
 
             <h2 class="mt-3"></h2>
@@ -26,15 +26,19 @@
                 </thead>
                 <tbody>
                     {% for p in productos%}
-                    <tr>
+                    <tr data-href="{% url 'actualizarProducto' p.id %}" style="cursor: pointer;">
                         <td>{{p.nombre}}</td>
-                        <td>{{p.categoria}}</td>
-                        <td>{{p.unidad_medidas}}</td>
+                        <td>{{p.get_categoria_display}}</td>
+                        <td>{{p.get_unidades_medidas_display}}</td>
                         <td>{{p.proveedor}}</td>
-                        <td>{{p.cantidad}}</td>
-                        <td>{{p.precio_compra}}</td>
                         <td>{{p.precio_venta}}</td>
+                        <td>{{p.precio_compra}}</td>
+                        <td>{{p.cantidad}}</td>
                         <td>{{p.bodega}}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="10" class="text-danger text-center">No se encontraron resultados</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -47,26 +51,48 @@
             </table>
         </div>
         <div class="col-2">
-            <div class="card mb-4" style="width: 17.5rem; box-shadow: 3px 3px 20px 4px rgba(252,110,32,0.25);margin-right: 3px;height: 22rem;">
-                <div class="card-body">
-                    <h5 class="card-title " style="color: black;">Nombre de Producto aqui</h5>
-                    <p class="card-text text-secondary">
-                        Codigo: <strong> # </strong>
-                    </p>
+        {% if p %}
+            <form action="{% url 'actualizarProducto' p.id %}" method="post">
+        {% else %}
+            <form action="" method="post">
+        {% endif %}
+            {% csrf_token %}
+                <div class="card mb-4" style="width: 17.5rem; box-shadow: 3px 3px 20px 4px rgba(252,110,32,0.25);margin-right: 3px;height: 22rem;">
+                    <div class="card-body">
+                        {% if p %}
+                            <h5 class="card-title" style="color: black;">{{p.nombre}}</h5>
+                        {% else %}
+                        <h5 class="card-title" style="color: black;">Nombre del Producto</h5>
+                        {% endif %}
+                        <p id="id_producto" name="id_producto" value="{{p.id}}" class="card-text text-secondary">
+                            Codigo: <strong>{{p.id}}</strong>
+                        </p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li value="{{p.categoria}}" class="list-group-item" style="height:4rem;">Categoria:<strong> {{p.get_categoria_display}}</strong></li>
+                        <li value="{{p.unidades_medidas}}" class="list-group-item" style="height:4rem;">Unid de Medida:<strong> {{p.get_unidades_medidas_display}}</strong></li>
+                        <li value="{{p.proveedor}}" class="list-group-item" style="height:4rem;">Proveedor:<strong> {{p.proveedor}}</strong></li>
+                        <li value="{{p.cantidad}}" id="cantidad" name="cantidad" class="list-group-item" style="height:4rem;">Cantidad Actual:<strong> {{p.cantidad}}</strong></li>
+                    </ul>
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item" style="height:4rem;">Categoria:<strong> # </strong></li>
-                    <li class="list-group-item" style="height:4rem;">Unid de Medida:<strong> # </strong></li>
-                    <li class="list-group-item" style="height:4rem;">Proveedor:<strong> # </strong></li>
-                    <li class="list-group-item" style="height:4rem;">Cantidad Actual:<strong> # </strong></li>
-                </ul>
-            </div>
-            <div style="width: 17.5rem; height: 10rem;">
-                <form action="">
-                    <input class="form-control-sm" type="number" name="cantidad" id="cantidad" placeholder="Actualizar Cantidad">
-                    <button class="btn btn-success col-3">✓</button>
-                </form>
-            </div>
+                <div style="width: 17.5rem; height: 10rem;">
+                        <input class="form-control-sm" type="number" name="cantidad" id="cantidad" placeholder="Actualizar Cantidad">
+                        <button class="btn btn-success col-3">✓</button>
+                </div>
+            </form>
         </div>
     </div>
 {% endblock %}
+
+{% block js %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('table tr').click(function(){
+            window.location = $(this).data('href');
+            return false;
+        });
+    });
+</script>
+{% endblock js %}
+
