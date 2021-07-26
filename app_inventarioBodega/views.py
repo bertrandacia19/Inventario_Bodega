@@ -1,14 +1,14 @@
 from django.shortcuts import get_object_or_404, render,redirect, reverse
 from django.contrib.auth.decorators import login_required
-from .models import Bodega,Empleado
+from .models import Bodega,Empleado,Venta
 #Vistas
 
-<<<<<<< HEAD
+
 # Create your views here.
 
 def index(request):
     return render(request, 'bodega/index.html')
-=======
+
 @login_required()
 def index(request):
     return render(request, 'bodega/index.html')
@@ -37,7 +37,6 @@ def empleados(request):
 
     }
 
-    
     return render(request, 'bodega/empleados.html', ctx)
 
 
@@ -53,14 +52,40 @@ def bodega(request):
         encargado = get_object_or_404(Empleado, pk=request.POST.get('encargado'))
 
         b = Bodega(nombre=nombre, direccion=direccion, encargado=encargado)
-        b.save() 
+        b.save()
 
         msj = f'Bodega registrada exitosamente'
 
-        
+
     ctx = {
         'bodega' : data,
         'emp': emp,
     }
     return render(request, 'bodega/bodega.html', ctx)
->>>>>>> Inicio_bodega
+
+@login_required()
+def venta(request):
+
+    data = Venta.objects.all()
+
+    if request.method == "POST":
+        #informacion de venta
+        producto = request.POST.get('producto')
+        cantidadProducto = request.POST.get('cantidadProducto')
+        PrecioProducto = request.POST.get('PrecioProducto')
+        descuento = request.POST.get('descuento')
+        ISV = request.POST.get('ISV')
+        subTotal = request.POST.get('subTotal')
+        totalVenta = request.POST.get('totalVenta')
+        fecha = request.POST.get('fechaIngreso')
+  
+        em = venta(producto=producto,cantidadProducto=cantidadProducto, PrecioProducto=PrecioProducto, descuento=descuento, ISV=ISV, subTotal=subTotal,totalVenta=totalVenta, fecha=fecha)
+        em.save() #insert a la base de datos
+
+
+    ctx = {
+        'venta' : data,
+
+    }
+
+    return render(request, 'bodega/venta.html',ctx)

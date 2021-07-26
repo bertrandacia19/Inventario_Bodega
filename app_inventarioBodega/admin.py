@@ -15,7 +15,7 @@ class TransferenciaAdmin(admin.ModelAdmin):
     list_display = ('id', 'ordenTransferencia', 'producto', 'cantidadProducto', 'PrecioProducto', 'totalTransferencia', 'bodegaOrigen', 'bodegaDestino', 'fecha')
 
 class VentaAdmin(admin.ModelAdmin):
-    list_display = ('id', 'ordenVenta', 'producto', 'cantidadProducto', 'PrecioProducto', 'descuento', 'subTotal', 'totalVenta', 'fecha')
+    list_display = ('id', 'ordenVenta', 'producto', 'cantidadProducto', 'PrecioProducto', 'descuento', 'ISV','subTotal', 'totalVenta', 'fecha')
 
 
 admin.site.register(Empleado,EmpleadoAdmin)

@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}Ventas{% endblock  %}
+
+{% block container %}
+
+    <div class="row ">
+        <div class="col-9 mb-3" >
+            <h2> Detalles Productos</h2>
+            <form action="" method="get">
+                <input type="search" name="q" value="{{ q|default_if_none:'' }}" class="form-control" placeholder="Buscar productos">
+            </form>
+            <br>
+
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Subtotal</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in venta %}
+                    <tr>
+                        <td>{{ p.Producto}}</td>
+                        <td>{{ p.Cantidad}}</td>
+                        <td>{{p.precio}}</td>
+                        <td>{{p.subtotal}}</td>
+                    </tr>
+                      {% empty %}
+                      {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+        <div class="col-3">
+            <h2>Datos Factura</h2>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="Fecha">Fecha</label>
+                    <input type="date" name="fecha" id="fecha" class="form-control" required autofocus>
+                </div>
+                <div class="mb-3">
+                    <label for="Cliente">Cliente</label>
+                    <input type="text" name="Cliente" id="Cliente" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="subtotal">Subtotal</label>
+                    <input type="number" name="subtotal" id="subtotal" class="form-control" required>
+                </div>
+    
+                <div class="mb-3">
+                    <label for="ISV">ISV</label>
+                    <input type="number" name="ISV" id="ISV" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="Descuento">Descuento</label>
+                    <input type="number" name="Descuento" id="Descuento" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="Total">Total </label>
+                    <input type="number" name="Total" id="Total" class="form-control" required>
+                </div>
+    
+                <div class="mb-3">
+                    <input type="submit" class="btn cards" value="Pagar">
+                </div>
+                <div class="mb-3">
+                    <input type="submit" class="btn cards" value="Guardar compra">
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+{% block js %}{% endblock  %}

@@ -80,6 +80,7 @@ class Venta(models.Model):
     cantidadProducto = models.IntegerField()
     PrecioProducto = models.IntegerField()
     descuento = models.FloatField(null=False, blank=False)
+    ISV  = models.FloatField(null=False, blank=False)
     subTotal = models.FloatField()
     totalVenta = models.FloatField()
     fecha = models.DateField()
