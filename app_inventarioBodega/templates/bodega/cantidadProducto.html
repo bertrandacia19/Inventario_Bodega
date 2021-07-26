@@ -5,6 +5,13 @@
 {% block container %}
     <div class="row">
         <div class="col-10">
+            {% if messages %}
+                <div class="alert alert-success mb-2">
+                {% for message in messages %}
+                    {{ message}}
+                {% endfor %}
+                </div>
+            {% endif %}
         {% comment %} Tabla que muestra todos los productos {% endcomment %}
             <form action="" method="get" class="alert-{{msj}}">
                 <input type="search" name="q" value="{{ q|default_if_none:'' }}" class="form-control" placeholder="Buscar productos">
@@ -92,6 +99,15 @@
             window.location = $(this).data('href');
             return false;
         });
+    });
+    $(function () {
+        
+        setTimeout(() => {
+            $('.alert').slideUp(function () {
+                $(this).remove();
+            });
+        }, 3000)
+
     });
 </script>
 {% endblock js %}
