@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-10">
         {% comment %} Tabla que muestra todos los productos {% endcomment %}
-            <form action="" method="get">
+            <form action="" method="get" class="alert-{{msj}}">
                 <input type="search" name="q" value="{{ q|default_if_none:'' }}" class="form-control" placeholder="Buscar productos">
             </form>
 
