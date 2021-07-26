@@ -76,8 +76,16 @@ Nuevo Producto
             </form>
         </div>
 
+        
         {% comment %} Tabla que muestra todos los productos {% endcomment %}
         <div class="col-10">
+            {% if messages %}
+                <div class="alert alert-{{msj}} mb-2">
+                {% for message in messages %}
+                    {{ message}}
+                {% endfor %}
+                </div>
+            {% endif %}
             <form action="" method="get">
                 <input type="search" name="q" value="{{ q|default_if_none:'' }}" class="form-control" autocomplete="off" placeholder="Buscar productos">
             </form><br>
@@ -97,7 +105,7 @@ Nuevo Producto
                 <tbody>
                 
                     {% for p in productos%}
-                    <tr>
+                    
                         <td>{{p.nombre}}</td>
                         <td>{{p.categoria}}</td>
                         <td>{{p.unidades_medidas}}</td>
@@ -119,6 +127,22 @@ Nuevo Producto
 {% endblock %}
 
 {% block js %}
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('table tr').click(function(){
+                window.location = $(this).data('href');
+                return false;
+            });
+        });
+        $(function () {
+        
+        setTimeout(() => {
+            $('.alert').slideUp(function () {
+                $(this).remove();
+            });
+        }, 3000)
 
-{% endblock %}
+    });
+    </script>
+{% endblock js %}
