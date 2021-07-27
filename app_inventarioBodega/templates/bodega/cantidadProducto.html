@@ -24,7 +24,6 @@
                         <th>Producto</th>
                         <th>Categoria</th>
                         <th>Unidad de Medida</th>
-                        <th>Proveedor</th>
                         <th>Precio de Venta</th>
                         <th>Precio de Compra</th>
                         <th>Cantidad</th>
@@ -37,7 +36,6 @@
                         <td>{{p.nombre}}</td>
                         <td>{{p.get_categoria_display}}</td>
                         <td>{{p.get_unidades_medidas_display}}</td>
-                        <td>{{p.proveedor}}</td>
                         <td>{{p.precio_venta}}</td>
                         <td>{{p.precio_compra}}</td>
                         <td>{{p.cantidad}}</td>
@@ -78,7 +76,7 @@
                     <ul class="list-group list-group-flush">
                         <li value="{{p.categoria}}" class="list-group-item" style="height:4rem;">Categoria:<strong> {{p.get_categoria_display}}</strong></li>
                         <li value="{{p.unidades_medidas}}" class="list-group-item" style="height:4rem;">Unid de Medida:<strong> {{p.get_unidades_medidas_display}}</strong></li>
-                        <li value="{{p.proveedor}}" class="list-group-item" style="height:4rem;">Proveedor:<strong> {{p.proveedor}}</strong></li>
+                        <li value="{{p.precio_venta}}" class="list-group-item" style="height:4rem;">Precio de venta:<strong> {{p.precio_venta}}</strong></li>
                         <li value="{{p.cantidad}}" id="cantidad" name="cantidad" class="list-group-item" style="height:4rem;">Cantidad Actual:<strong> {{p.cantidad}}</strong></li>
                     </ul>
                 </div>
