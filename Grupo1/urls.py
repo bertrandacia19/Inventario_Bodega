@@ -20,6 +20,7 @@ from app_inventarioBodega import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('NuevoProducto/',views.nuevoProducto, name="nuevoProducto"),
-    path('CantidadProducto/<int:id>', views.actualizarProducto , name="actualizarProducto"),
+    path('CantidadProducto/<int:id>/actualizar', views.actualizarProducto , name="actualizarProducto"),
     path('CantidadProducto/',views.cantidadProducto, name="cantidadProducto"),
+    path('NuevoProducto/<int:id>/modificar', views.modificarProducto , name="modificarProducto"),
 ]
