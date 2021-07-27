@@ -1,7 +1,7 @@
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render,redirect, reverse
 from django.contrib.auth.decorators import login_required
-from .models import Bodega,Empleado, Producto
+from .models import Bodega,Empleado,Producto
 from django.contrib import messages
 #Vistas
 
@@ -60,7 +60,7 @@ def bodega(request):
     }
     return render(request, 'bodega/bodega.html', ctx)
 
-
+@login_required()
 def nuevoProducto(request):
     if request.method == 'POST':
         nombre = request.POST.get('nombre')
@@ -133,6 +133,7 @@ def nuevoProducto(request):
     }
     return render(request, 'bodega/nuevoProducto.html', ctx)
 
+@login_required()
 def cantidadProducto(request):
     
     q = request.GET.get('q')

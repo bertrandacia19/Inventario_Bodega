@@ -8,7 +8,7 @@ Nuevo Producto
     <div class="row">
         <div class="col-2">
             {% if p %}
-                <form action="{% url 'modificarProducto' p.id %}" method="post">
+                <form action="{% url 'inventario:modificarProducto' p.id %}" method="post">
             {% else %}
                 <form action="" method="post">
             {% endif %}
@@ -80,7 +80,7 @@ Nuevo Producto
                 </div>
 
                 <div class="mb-3">
-                    <input type="submit" class="btn btn-success" value="Registrar Producto">
+                    <input type="submit" class="btn cards" value="Registrar Producto">
                 </div>
             </form>
         </div>
@@ -95,7 +95,7 @@ Nuevo Producto
                 {% endfor %}
                 </div>
             {% endif %}
-            <form action="{% url 'nuevoProducto' %}" method="get">
+            <form action="{% url 'inventario:nuevoProducto' %}" method="get">
                 <input type="search" name="q" value="{{ q|default_if_none:'' }}" class="form-control" autocomplete="off" placeholder="Buscar productos">
             </form><br>
             <table class="table table-hover table-dark table-striped">
@@ -113,7 +113,7 @@ Nuevo Producto
                 <tbody>
 
                     {% for p in productos%}
-                    <tr data-href="{% url 'modificarProducto' p.id %}" style="cursor: pointer;">
+                    <tr data-href="{% url 'inventario:modificarProducto' p.id %}" style="cursor: pointer;">
                         <td>{{p.nombre}}</td>
                         <td>{{p.get_categoria_display}}</td>
                         <td>{{p.get_unidades_medidas_display}}</td>

@@ -33,7 +33,7 @@
                 </thead>
                 <tbody>
                     {% for p in productos%}
-                    <tr data-href="{% url 'actualizarProducto' p.id %}" style="cursor: pointer;">
+                    <tr data-href="{% url 'inventario:actualizarProducto' p.id %}" style="cursor: pointer;">
                         <td>{{p.nombre}}</td>
                         <td>{{p.get_categoria_display}}</td>
                         <td>{{p.get_unidades_medidas_display}}</td>
@@ -59,7 +59,7 @@
         </div>
         <div class="col-2">
         {% if p %}
-            <form action="{% url 'actualizarProducto' p.id %}" method="post">
+            <form action="{% url 'inventario:actualizarProducto' p.id %}" method="post">
         {% else %}
             <form action="" method="post">
         {% endif %}
@@ -83,8 +83,8 @@
                     </ul>
                 </div>
                 <div style="width: 17.5rem; height: 10rem;">
-                        <input class="form-control-sm" type="number" name="cantidad" id="cantidad" placeholder="Actualizar Cantidad">
-                        <button class="btn btn-success col-3">✓</button>
+                        <input class="form-control-sm" style="width: 60%;" type="number" name="cantidad" id="cantidad" placeholder="Actualizar Cantidad">
+                        <button class="btn btn-actualizar col-3" style="background-color: #FC6E20;">✓</button>
                 </div>
             </form>
         </div>
