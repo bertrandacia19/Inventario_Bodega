@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render,redirect, reverse
 from django.contrib.auth.decorators import login_required
-from .models import Bodega,Empleado,Venta
+from .models import Bodega,Empleado,Venta,Producto
 #Vistas
 
 
@@ -85,7 +85,18 @@ def venta(request):
 
     ctx = {
         'venta' : data,
+        'productos': Producto.objects.all().order_by('nombre'),
 
     }
 
     return render(request, 'bodega/venta.html',ctx)
+
+def productoVenta(request,id):
+    p = get_object_or_404(Producto, pk=id)
+    cantidad = request.POST.get('cantidad')
+    productos = Producto.objects.all().order_by('nombre')
+    ctx ={
+            'productos': productos,
+            'p':p,
+    }
+    return render(request, 'bodega/venta.html', ctx)
