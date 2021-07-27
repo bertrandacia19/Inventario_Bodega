@@ -13,7 +13,7 @@
                 </div>
             {% endif %}
         {% comment %} Tabla que muestra todos los productos {% endcomment %}
-            <form action="" method="get" class="alert-{{msj}}">
+            <form action="{% url 'cantidadProducto' %}" method="get" class="alert-{{msj}}">
                 <input type="search" name="q" value="{{ q|default_if_none:'' }}" class="form-control" placeholder="Buscar productos">
             </form>
 
