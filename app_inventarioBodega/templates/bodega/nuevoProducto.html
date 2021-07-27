@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Nuevo Producto
+{% endblock %}
+
+{% block container %}
+    <div class="row">
+        <div class="col-2">
+            {% if p %}
+                <form action="{% url 'modificarProducto' p.id %}" method="post">
+            {% else %}
+                <form action="" method="post">
+            {% endif %}
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="producto">Producto</label><br>
+                    <input value="{{p.nombre}}" type="text" name="nombre" id="nombre" class="form-control" autocomplete="off" required autofocus>
+                </div>
+
+                <div class="mb-3">
+                    <label for="categoria">Categoria</label><br>
+                    <select name="categoria" id="categoria" class="form-control">
+                        <option value="1">Lacteos</option>
+                        <option value="2">Carnes</option>
+                        <option value="3">Bebidas</option>
+                        <option value="4">Limpieza</option>
+                        <option value="5">Abarrotes</option>
+                        <option value="6">Enlatados</option>
+                        <option value="7">Granos</option>
+                        <option value="8">Dulces</option>
+                        <option value="9">Otros</option>
+                        <option id="cate" value="{{p.categoria}}" hidden></option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="unidad">Unidad de medida</label><br>
+                    <select  name="unidad" id="unidad" class="form-control">
+                        <option value="1">Libras</option>
+                        <option value="2">Kilos</option>
+                        <option value="3">Cajas</option>
+                        <option value="4">Docena</option>
+                        <option value="5">Media Docena</option>
+                        <option value="6">Quintal</option>
+                        <option value="7">Litros</option>
+                        <option id="uni" value="{{p.unidades_medidas}}" hidden></option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="precioVenta">Precio de Venta</label><br>
+                    <input type="number" value="{{p.precio_venta}}" step="0.01" name="precio_venta" id="precio_venta" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="precioCompra">Precio de Compra</label><br>
+                    <input type="number" value="{{p.precio_compra}}" step="0.01" name="precio_compra" id="precio_compra" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="cantidad">Cantidad</label><br>
+                    <input type="number" value="{{p.cantidad}}" name="cantidad" id="cantidad" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="bodega">Bodega</label><br>
+                    <select name="bodega" id="bodega" class="form-control">
+                        {% if p %}
+                            {% for b in bodega %}
+                                {% if p.bodega == b %}
+                                    <option value="{{b.id}}">Nombre:{{b.nombre}} - Capacidad:{{b.capacidad}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            {% for b in bodega %}
+                                <option value="{{b.id}}">Nombre:{{b.nombre}} - Capacidad:{{b.capacidad}}</option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <input type="submit" class="btn btn-success" value="Registrar Producto">
+                </div>
+            </form>
+        </div>
+
+        
+        {% comment %} Tabla que muestra todos los productos {% endcomment %}
+        <div class="col-10">
+            {% if messages %}
+                <div class="alert alert-{{msj}} mb-2">
+                {% for message in messages %}
+                    {{ message}}
+                {% endfor %}
+                </div>
+            {% endif %}
+            <form action="{% url 'nuevoProducto' %}" method="get">
+                <input type="search" name="q" value="{{ q|default_if_none:'' }}" class="form-control" autocomplete="off" placeholder="Buscar productos">
+            </form><br>
+            <table class="table table-hover table-dark table-striped">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Categoria</th>
+                        <th>Unidad de Medida</th>
+                        <th>Precio de Venta</th>
+                        <th>Precio de Compra</th>
+                        <th>Cantidad</th>
+                        <th>Bodega</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for p in productos%}
+                    <tr data-href="{% url 'modificarProducto' p.id %}" style="cursor: pointer;">
+                        <td>{{p.nombre}}</td>
+                        <td>{{p.get_categoria_display}}</td>
+                        <td>{{p.get_unidades_medidas_display}}</td>
+                        <td>{{p.precio_venta}}</td>
+                        <td>{{p.precio_compra}}</td>
+                        <td>{{p.cantidad}}</td>
+                        <td>{{p.bodega}}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="10" class="text-danger text-center">No se encontraron resultados</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        var selected_categoria = $("#cate").attr("value")
+        var selected_unidad = $("#uni").attr("value")
+        $(document).ready(function(){
+            $('table tr').click(function(){
+                window.location = $(this).data('href');
+                return false;
+            });
+            $("#categoria").val(selected_categoria).change();
+            $("#unidad").val(selected_unidad).change();
+        });
+        $(function () {
+        
+        setTimeout(() => {
+            $('.alert').slideUp(function () {
+                $(this).remove();
+            });
+        }, 3000)
+
+    });
+    </script>
+{% endblock js %}
