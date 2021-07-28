@@ -13,7 +13,7 @@ class Empleado(models.Model):
     telefono = models.IntegerField()
     correo = models.EmailField()
     fechaIngreso = models.DateField()
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return f'{self.nombre} {self.apellido}'

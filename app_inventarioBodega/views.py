@@ -1,7 +1,7 @@
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render,redirect, reverse
 from django.contrib.auth.decorators import login_required
-from .models import Bodega,Empleado,Producto, Transferencia, Inventarios_Bodega
+from .models import Bodega,Empleado,Producto, Transferencia, Inventarios_Bodega, Cliente
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
 from django.db import transaction
@@ -40,12 +40,13 @@ def empleados(request):
         em.save() #insert a la base de datos
 
         msj = f'El Empleado {nombre} {apellido} ha sido registrado.'
-
+        messages.add_message(request,messages.INFO, msj)
+        
     ctx = {
         'empleados' : data,
+        'msj':'success',
 
     }
-
     
     return render(request, 'bodega/empleados.html', ctx)
 
@@ -314,3 +315,31 @@ def transferencia(request):
     }
 
     return render(request, 'bodega/transferencia.html',ctx)
+
+@login_required()
+def clientes(request):
+    data = Cliente.objects.all().order_by('nombre')
+
+    if request.method == "POST":
+        #informacion clientes
+        nombre = request.POST.get('nombre')
+        apellido = request.POST.get('apellido')
+        telefono = request.POST.get('telefono')
+        correo = request.POST.get('correo')
+        direccion = request.POST.get('direccion')
+
+        clien = Cliente(nombre=nombre, apellido=apellido, telefono=telefono, correo=correo, direccion=direccion)
+        clien.save() #insertar a la base de datos
+
+        msj = f'El Cliente {nombre} {apellido} ha sido registrado'
+        messages.add_message(request,messages.INFO, msj)
+
+
+    ctx = {
+        'clientes' : data,
+        'msj':'success',
+    }
+
+
+
+    return render(request, 'bodega/clientes.html', ctx)
