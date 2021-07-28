@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Empleado,Bodega,Producto,Transferencia,Venta,Inventarios_Bodega, DetalleFactura
+from .models import Empleado,Bodega,Producto,Transferencia,Venta,Inventarios_Bodega, DetalleFactura, Cliente
 # Register your models here.
 
 class EmpleadoAdmin(admin.ModelAdmin):
@@ -20,8 +20,13 @@ class VentaAdmin(admin.ModelAdmin):
 class InventarioAdmin(admin.ModelAdmin):
     list_display = ('id', 'bodega', 'producto', 'stock')
 
+class ClienteAdmin(admin.ModelAdmin):
+    list_display = ('id', 'nombre', 'apellido')
+
 class DetalleFacturaAdmin(admin.ModelAdmin):
     list_display = ('id', 'ordenVenta', 'subTotal')
+
+
 
 
 
@@ -36,5 +41,7 @@ admin.site.register(Transferencia,TransferenciaAdmin)
 admin.site.register(Venta,VentaAdmin)
 
 admin.site.register(Inventarios_Bodega,InventarioAdmin)
+
+admin.site.register(Cliente, ClienteAdmin)
 
 admin.site.register(DetalleFactura, DetalleFacturaAdmin)

@@ -1,7 +1,7 @@
 from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404, render,redirect, reverse
 from django.contrib.auth.decorators import login_required
-from .models import Bodega,Empleado,Venta,Producto
+from .models import Bodega, Cliente,Empleado,Venta,Producto
 #Vistas
 
 
@@ -68,7 +68,8 @@ def bodega(request):
 def venta(request):
 
     data = Venta.objects.all()
-
+    empleados = Empleado.objects.all().order_by('fechaIngreso')
+    clientes =Cliente.objects.all().order_by('nombre')
     if request.method == "POST":
         #informacion de venta
         producto = request.POST.get('producto')
@@ -87,6 +88,8 @@ def venta(request):
     ctx = {
         'venta' : data,
         'productos': Producto.objects.all().order_by('nombre'),
+        'empleados': empleados,
+        'clientes':clientes,
 
     }
 
@@ -99,6 +102,7 @@ def productoVenta(request,id):
     ctx ={
             'productos': productos,
             'p':p,
+           
     }
 
     return render(request, 'bodega/venta.html', ctx)

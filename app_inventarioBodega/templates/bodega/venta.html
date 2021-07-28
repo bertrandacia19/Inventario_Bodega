@@ -33,15 +33,32 @@
         </div>
         <div class="col-3">
             <h2>Datos Factura</h2>
-            <form action="" method="post">
+            <form action="{% url 'inventario:venta' %}" method="POST">
                 {% csrf_token %}
                 <div class="mb-3">
                     <label for="Fecha">Fecha</label>
                     <input type="date" name="fecha" id="fecha" class="form-control" required autofocus>
                 </div>
                 <div class="mb-3">
-                    <label for="Cliente">Cliente</label>
-                    <input type="text" name="Cliente" id="Cliente" class="form-control" required>
+                 <label for="clientes">Cliente</label>
+                    <select name="clientes" id="clientes" class="form-control">
+                        <option value=" "> Buscar Cliente </option>
+                        {%for c in clientes %}
+                            <option value="{{c.id}}">{{c.nombre}} {{c.apellido}} </option>
+                        {%endfor%}
+    
+                    </select>
+                </div>
+                <div class="mb-3">
+                 <label for="empleados">Empleado</label>
+                    <select name="empleados" id="empleados" class="form-control">
+                        <option value=" "> Buscar Empleado </option>
+
+                        {%for e in empleados %}
+                            <option value="{{e.id}}">{{e.nombre}} {{e.apellido}} </option>
+                        {%endfor%}
+    
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="subtotal">Subtotal</label>
@@ -82,11 +99,12 @@
 <script>
         var productosAgregado = []
         $(document).ready(function(){
-            $('select').change(function(e){
+            $('#productos').change(function(e){
 
                 var id = this.value;
                 var link = `/inventario/producto/${id}/`;
 
+              
                 $.ajax({
                     url: link,
                 }).done(function(res){
@@ -112,7 +130,7 @@
                 //return false;
             });
         });
-
+   
 
 </script>
 
