@@ -1,3 +1,4 @@
+from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404, render,redirect, reverse
 from django.contrib.auth.decorators import login_required
 from .models import Bodega,Empleado,Venta,Producto
@@ -99,4 +100,11 @@ def productoVenta(request,id):
             'productos': productos,
             'p':p,
     }
+
     return render(request, 'bodega/venta.html', ctx)
+
+def infoProducto(request, id):
+    producto = get_object_or_404(Producto, pk=id)
+
+    
+    return JsonResponse({'id': producto.id, 'nombre' : producto.nombre, 'categoria' : producto.categoria, 'precio': producto.precio})

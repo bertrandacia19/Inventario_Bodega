@@ -13,4 +13,5 @@ urlpatterns = [
     #venta
     path('venta/', views.venta, name='venta'),
     path('venta/<int:id>/selecionado', views.productoVenta, name='productoVenta'),
+    path('producto/<int:id>/', views.infoProducto, name="infoProducto")
 ]

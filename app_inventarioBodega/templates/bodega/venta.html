@@ -10,7 +10,7 @@
              <select name="productos" id="productos" class="form-control">
                         <option value=" "> Buscar Producto </option>
                       {%for p in productos %}
-                            <option data-href="{% url 'inventario:productoVenta' p.id %}"value="{{p.id}}">{{p.nombre}}   -  {{p.categoria}} - {{p.precio}}</option>
+                            <option value="{{p.id}}">{{p.nombre}}   -  {{p.categoria}} - {{p.precio}}</option>
                        {%endfor%}
     
                     </select>
@@ -27,17 +27,7 @@
                         <th>Eliminar</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {% for p in productoVenta %}
-                    <tr>
-                        <td>{{ p.nombre}}</td>
-                        <td>{{p.categoria}}</td>
-                        <td>{{p.precio}}</td>
-                        
-                    </tr>
-                      {% empty %}
-                      {% endfor %}
-                </tbody>
+                <tbody id="tabla"></tbody>
 
             </table>
         </div>
@@ -90,11 +80,38 @@
 
 
 <script>
-$(document).ready(function(){
-            $('select option').click(function(){
-                window.location = $(this).data('href');
-                return false;
+        var productosAgregado = []
+        $(document).ready(function(){
+            $('select').change(function(e){
+
+                var id = this.value;
+                var link = `/inventario/producto/${id}/`;
+
+                $.ajax({
+                    url: link,
+                }).done(function(res){
+                    var encontrado = productosAgregado.find( function(p) {
+                        return p.id == id;
+                    });
+                    if (encontrado){
+                        return
+                    }
+                    productosAgregado.push(res);
+                    
+                    var html = '<tr>';
+                    html += `<td>${res.nombre}</td>`;
+                    html += `<td>${res.categoria}</td>`;
+                    html += `<td>${res.precio}</td>`;
+                    html += `<td style="width: 135px;"><input type="number" name="cantidad" style="width: 100%;"></td>`;
+                    html += '</tr>';
+
+                    $('#tabla').append(html)
+
+                })
+                //return false;
             });
+        });
+
 
 </script>
 

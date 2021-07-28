@@ -1,4 +1,7 @@
 from django.db import models
+from django.db.models.deletion import CASCADE
+from django.db.models.fields import DateTimeField, IntegerField
+from django.db.models.fields.related import ForeignKey
 
 
 
@@ -12,6 +15,7 @@ class Empleado(models.Model):
     telefono = models.IntegerField()
     correo = models.EmailField()
     fechaIngreso = models.DateField()
+    user = models.OneToOneField()
 
     def __str__(self):
         return f'{self.nombre} {self.apellido}'
@@ -85,5 +89,21 @@ class Venta(models.Model):
     totalVenta = models.FloatField()
     fecha = models.DateField()
 
-    def _str_(self):
+    def __str__(self):
         return f'{self.ordenVenta}'
+
+class Cliente(models.Model):
+    nombre = models.CharField(max_length=35)
+    apellido = models.CharField(max_length=35)
+    telefono = models.IntegerField()
+    correo = models.EmailField()
+
+    def __str__(self):
+        return f'{self.nombre} {self.apellido}'
+
+class DetalleFactura(models.Model):
+    fecha = DateTimeField(auto_now_add=True)
+    cliente = ForeignKey(Cliente, on_delete= models.CASCADE)
+    empleado = ForeignKey(Empleado, on_delete= models.CASCADE)
+    def __str__(self):
+        return 
