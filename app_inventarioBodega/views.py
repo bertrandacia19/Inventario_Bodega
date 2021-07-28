@@ -10,7 +10,12 @@ from decimal import Decimal
 
 @login_required()
 def index(request):
-    return render(request, 'bodega/index.html')
+    bodega = Bodega.objects.get(encargado=request.user.empleado)
+
+    ctx = {
+        'bodega': bodega
+    }
+    return render(request, 'bodega/index.html', ctx)
 
 
 @login_required()

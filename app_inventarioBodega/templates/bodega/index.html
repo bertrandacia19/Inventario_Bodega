@@ -5,88 +5,200 @@
 {% endblock %}
 
 {% block container %}
-    <h1>Bodega Comedera</h1>
+    <h1>{{bodega}}</h1>
+    {% if request.user.is_superuser %}
+        <div class="row mt-4">
+            <div class="col-3">
+                <div class="card mb-4 cards-shadow">
+                    <div class="card-body cards-text">
+                        <i class="fas fa-user-plus fa-7x " style="margin-left: 68px; margin-top: 15px;"></i>
 
-    <div class="row mt-4">
-        <div class="col-3">
-            <div class="card mb-4 cards-shadow">
-                <div class="card-body cards-text">
-                    <i class="fas fa-user-plus fa-7x " style="margin-left: 68px; margin-top: 15px;"></i>
-
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><a href="{% url 'inventario:empleados' %}" class="btn cards">Empleados</a></li>
+                    </ul>
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="{% url 'inventario:empleados' %}" class="btn cards">Empleados</a></li>
-                </ul>
+            </div>
+
+            <div class="col-3">
+                <div class="card mb-4 cards-shadow">
+                    <div class="card-body cards-text">
+                        <i class="fas fa-warehouse fa-7x " style="margin-left: 53px; margin-top: 15px;"></i>
+
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><a href="{% url 'inventario:bodega' %}" class="btn cards">Bodegas</a></li>
+                    </ul>
+                </div>
+            </div>  
+
+            <div class="col-3">
+                <div class="card mb-4 cards-shadow">
+                    <div class="card-body cards-text">
+                        <i class="fas fa-boxes fa-7x " style="margin-left: 64px; margin-top: 15px;"></i>
+
+
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><a href="{% url 'inventario:cantidadProducto' %}" class="btn cards">Productos</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-3">
+                <div class="card mb-4 cards-shadow">
+                    <div class="card-body cards-text">
+                        <i class="fas fa-cart-plus fa-7x " style="margin-left: 55px; margin-top: 15px;"></i>
+
+
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><a href="{% url 'inventario:nuevoProducto' %}" class="btn cards">Nuevos Productos</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div class="row mt-4">
+            <div class="col-3">
+                <div class="card mb-4 cards-shadow">
+                    <div class="card-body cards-text">
+                        <i class="fas fa-file-signature fa-7x " style="margin-left: 75px; margin-top: 15px;"></i>
+
+
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><a href="#" class="btn cards">Inventario</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-3">
+                <div class="card mb-4 cards-shadow">
+                    <div class="card-body cards-text">
+                        <i class="fas fa-shipping-fast fa-7x " style="margin-left: 54px; margin-top: 15px;"></i>
+
+
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><a href="{% url 'inventario:transferencia' %}" class="btn cards">Transferencias</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-3">
+                <div class="card mb-4 cards-shadow">
+                    <div class="card-body cards-text">
+                        <i class="fas  far fa-address-card fa-7x " style="margin-left: 62px; margin-top: 15px;"></i>
+
+
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><a href="#" class="btn cards">Cliente</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-3">
+                <div class="card mb-4 cards-shadow">
+                    <div class="card-body cards-text">
+                        <i class="fas  fa-cash-register fa-7x " style="margin-left: 69px; margin-top: 15px;"></i>
+
+
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><a href="#" class="btn cards">Venta de Productos</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
+    {% else %}
+        <div class="row mt-4">
+            <div class="col-3">
+                <div class="card mb-4 cards-shadow">
+                    <div class="card-body cards-text">
+                        <i class="fas fa-boxes fa-7x " style="margin-left: 64px; margin-top: 15px;"></i>
 
-        <div class="col-3">
-            <div class="card mb-4 cards-shadow">
-                <div class="card-body cards-text">
-                    <i class="fas fa-warehouse fa-7x " style="margin-left: 53px; margin-top: 15px;"></i>
 
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><a href="{% url 'inventario:cantidadProducto' %}" class="btn cards">Productos</a></li>
+                    </ul>
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="{% url 'inventario:bodega' %}" class="btn cards">Bodegas</a></li>
-                </ul>
+            </div>
+
+            <div class="col-3">
+                <div class="card mb-4 cards-shadow">
+                    <div class="card-body cards-text">
+                        <i class="fas fa-cart-plus fa-7x " style="margin-left: 55px; margin-top: 15px;"></i>
+
+
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><a href="{% url 'inventario:nuevoProducto' %}" class="btn cards">Nuevos Productos</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-3">
+                <div class="card mb-4 cards-shadow">
+                    <div class="card-body cards-text">
+                        <i class="fas  fa-file-signature fa-7x " style="margin-left: 75px; margin-top: 15px;"></i>
+
+
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><a href="#" class="btn cards">Inventario</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-3">
+                <div class="card mb-4 cards-shadow">
+                    <div class="card-body cards-text">
+                        <i class="fas  far fa-address-card fa-7x " style="margin-left: 62px; margin-top: 15px;"></i>
+
+
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><a href="#" class="btn cards">Cliente</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div class="row mt-4">
+            <div class="col-3 offset-md-3">
+                <div class="card mb-4 cards-shadow">
+                    <div class="card-body cards-text">
+                        <i class="fas fa-shipping-fast fa-7x " style="margin-left: 54px; margin-top: 15px;"></i>
+
+
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><a href="{% url 'inventario:transferencia' %}" class="btn cards">Transferencias</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-3">
+                <div class="card mb-4 cards-shadow">
+                    <div class="card-body cards-text">
+                        <i class="fas  fa-cash-register fa-7x " style="margin-left: 69px; margin-top: 15px;"></i>
+
+
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><a href="#" class="btn cards">Venta de Productos</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
+    {% endif %}
 
-        <div class="col-3">
-            <div class="card mb-4 cards-shadow">
-                <div class="card-body cards-text">
-                    <i class="fas fa-boxes fa-7x " style="margin-left: 64px; margin-top: 15px;"></i>
-
-
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="{% url 'inventario:cantidadProducto' %}" class="btn cards">Productos</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="col-3">
-            <div class="card mb-4 cards-shadow">
-                <div class="card-body cards-text">
-                    <i class="fas fa-cart-plus fa-7x " style="margin-left: 55px; margin-top: 15px;"></i>
-
-
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="{% url 'inventario:nuevoProducto' %}" class="btn cards">Nuevos Productos</a></li>
-                </ul>
-            </div>
-        </div>
-
-    </div>
-    <div class="row mt-4">
-        <div class="col-3" style="margin-left: 25%;">
-            <div class="card mb-4 cards-shadow">
-                <div class="card-body cards-text">
-                    <i class="fas fa-shipping-fast fa-7x " style="margin-left: 54px; margin-top: 15px;"></i>
-
-
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="{% url 'inventario:transferencia' %}" class="btn cards">Transferencias</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="col-3">
-            <div class="card mb-4 cards-shadow">
-                <div class="card-body cards-text">
-                    <i class="fas  fa-cash-register fa-7x " style="margin-left: 69px; margin-top: 15px;"></i>
-
-
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="#" class="btn cards">Venta de Productos</a></li>
-                </ul>
-            </div>
-        </div>
-
-    </div>
+    
+    
+    
 {% endblock %}
 
 

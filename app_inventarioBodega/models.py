@@ -43,6 +43,7 @@ class Producto(models.Model):
     nombre = models.CharField(max_length=30)
     categoria = models.CharField(max_length=1, choices=CATEGORIAS, default='1')
     unidades_medidas = models.CharField(max_length=1, choices=MEDIDAS, default='1')
+    proveedor = models.CharField(max_length=25, null=True, blank=True)
     precio = models.FloatField()
     ordenCompra = models.CharField(max_length=10)
 
