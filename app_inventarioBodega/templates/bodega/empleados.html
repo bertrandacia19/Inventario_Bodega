@@ -14,13 +14,13 @@ EmpleadosBodega
                 <div class="col-6">
                     <div class="mb-3">
                         <label for="nombre" >Nombre</label>
-                        <input type="text" value="{{ em.nombre }}" name="nombre" id="nombre" class="form-control" required placeholder="Pablo" autofocus >
+                        <input type="text" value="{{ em.nombre }}" name="nombre" id="nombre" class="form-control" required placeholder="Pablo" autofocus maxlength="20">
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="mb-3">
                         <label for="apellido" >Apellido</label>
-                        <input type="text" value="{{ em.apellido }}" name="apellido" id="apellido" class="form-control" required placeholder="Escobar">
+                        <input type="text" value="{{ em.apellido }}" name="apellido" id="apellido" class="form-control" required placeholder="Escobar" maxlength="20">
                     </div>
                 </div>
             </div>
@@ -29,13 +29,13 @@ EmpleadosBodega
                 <div class="col-6">
                     <div class="mb-3">
                         <label for="direccion" >Dirección</label>
-                        <input type="text" value="{{ em.direccion }}" name="direccion" id="direccion" class="form-control" required placeholder="San Juan Pueblo, La Masica, Atlántida">
+                        <input type="text" value="{{ em.direccion }}" name="direccion" id="direccion" class="form-control" required placeholder="San Juan Pueblo, La Masica, Atlántida" maxlength="100">
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="mb-3">
                         <label for="telefono" >Número de Teléfono</label>
-                        <input type="text" value="{{ em.telefono }}" name="telefono" id="telefono" class="form-control" required placeholder="98503652">
+                        <input type="text" value="{{ em.telefono }}" name="telefono" id="telefono" class="form-control" required placeholder="98503652" maxlength="20">
                     </div>
                 </div>
             </div>
@@ -44,7 +44,7 @@ EmpleadosBodega
                 <div class="col-6">
                     <div class="mb-3">
                         <label for="correo" >Correo Electrónico</label>
-                        <input type="email" value="{{ em.correo }}" name="correo" id="correo" class="form-control" required placeholder="Elpatrono@gmail.com">
+                        <input type="email" value="{{ em.correo }}" name="correo" id="correo" class="form-control" required placeholder="Elpatrono@gmail.com" maxlength="60">
                     </div>
                 </div>
                 <div class="col-6">
