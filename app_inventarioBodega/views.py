@@ -10,12 +10,16 @@ from decimal import Decimal
 
 @login_required()
 def index(request):
-    bodega = Bodega.objects.get(encargado=request.user.empleado)
+    if not request.user.is_superuser:
+        bodega = Bodega.objects.get(encargado=request.user.empleado)
 
-    ctx = {
+        ctx = {
         'bodega': bodega
-    }
-    return render(request, 'bodega/index.html', ctx)
+        }
+        return render(request, 'bodega/index.html', ctx)
+    
+    return render(request, 'bodega/index.html')
+    
 
 
 @login_required()
