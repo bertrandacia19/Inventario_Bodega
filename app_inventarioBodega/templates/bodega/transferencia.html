@@ -14,7 +14,7 @@ Transferencias de bodegas
     <div class="container" style="color: #FFFFFF">
         <h1>Transferencias de bodegas</h1>
         <br>
-        <form action="{% url 'transferencia' %}" method="POST">
+        <form action="{% url 'inventario:transferencia' %}" method="POST">
             {% csrf_token %}
             <div class="row mb-4">
                 <div class="col-6">
@@ -88,7 +88,7 @@ Transferencias de bodegas
             </div>
             <div class="row mb-4">
                 <div class="col-3 mb-3">
-                    <input type="submit" class="btn" style="width: 75%;height: 3.5rem;border-radius: 8px;background-color: #FC6E20;" value="Transferir">
+                    <input type="submit" class="btn cards"  value="Transferir">
                 </div>
             </div> 
             

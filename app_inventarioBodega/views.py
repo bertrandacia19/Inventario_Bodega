@@ -12,6 +12,7 @@ from decimal import Decimal
 def index(request):
     return render(request, 'bodega/index.html')
 
+
 @login_required()
 def empleados(request):
 
@@ -40,7 +41,6 @@ def empleados(request):
     return render(request, 'bodega/empleados.html', ctx)
 
 
-
 @login_required()
 def bodega(request):
     data = Bodega.objects.all().order_by('nombre')
@@ -62,6 +62,7 @@ def bodega(request):
         'emp': emp,
     }
     return render(request, 'bodega/bodega.html', ctx)
+
 
 @login_required()
 def nuevoProducto(request):
@@ -136,6 +137,7 @@ def nuevoProducto(request):
     }
     return render(request, 'bodega/nuevoProducto.html', ctx)
 
+
 @login_required()
 def cantidadProducto(request):
     
@@ -170,6 +172,8 @@ def cantidadProducto(request):
     }
     return render(request, 'bodega/cantidadProducto.html', ctx)
 
+
+@login_required
 def actualizarProducto(request, id):
     p = get_object_or_404(Producto, pk=id)
 
@@ -200,6 +204,8 @@ def actualizarProducto(request, id):
 
     return render(request, 'bodega/cantidadProducto.html', ctx)
 
+
+@login_required
 def modificarProducto(request, id):
     p = get_object_or_404(Producto, pk=id)
 
@@ -242,6 +248,8 @@ def modificarProducto(request, id):
 
     return render(request, 'bodega/nuevoProducto.html', ctx)
 
+
+@login_required()
 def transferencia(request):
     bodegas = Bodega.objects.all().order_by('nombre')
     productos_list = Producto.objects.all().order_by('nombre')
