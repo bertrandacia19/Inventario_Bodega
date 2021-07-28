@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Empleado,Bodega,Producto,Transferencia,Venta
+from .models import Empleado,Bodega,Producto,Transferencia,Venta,Inventarios_Bodega
 # Register your models here.
 
 class EmpleadoAdmin(admin.ModelAdmin):
@@ -9,13 +9,16 @@ class BodegaAdmin(admin.ModelAdmin):
     list_display = ('id', 'nombre', 'direccion' ,'encargado',)
 
 class ProductoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'nombre', 'categoria','cantidad','precio_compra','precio_compra','bodega')
+    list_display = ('id', 'nombre', 'categoria','precio')
 
 class TransferenciaAdmin(admin.ModelAdmin):
     list_display = ('id', 'ordenTransferencia', 'producto', 'cantidadProducto', 'PrecioProducto', 'totalTransferencia', 'bodegaOrigen', 'bodegaDestino', 'fecha')
 
 class VentaAdmin(admin.ModelAdmin):
     list_display = ('id', 'ordenVenta', 'producto', 'cantidadProducto', 'PrecioProducto', 'descuento', 'subTotal', 'totalVenta', 'fecha')
+
+class InventarioAdmin(admin.ModelAdmin):
+    list_display = ('id', 'bodega', 'producto')
 
 
 admin.site.register(Empleado,EmpleadoAdmin)
@@ -26,5 +29,6 @@ admin.site.register(Producto,ProductoAdmin)
 
 admin.site.register(Transferencia,TransferenciaAdmin)
 
-
 admin.site.register(Venta,VentaAdmin)
+
+admin.site.register(Inventarios_Bodega,InventarioAdmin)

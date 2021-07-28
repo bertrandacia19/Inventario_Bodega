@@ -6,9 +6,6 @@ from django.db.models.fields.related import ForeignKey
 
 
 
-
-
-
 class Empleado(models.Model):
 
     nombre = models.CharField(max_length=30)
@@ -20,16 +17,6 @@ class Empleado(models.Model):
 
     def __str__(self):
         return f'{self.nombre} {self.apellido}'
-
-
-class Bodega(models.Model):
-
-    nombre = models.CharField(max_length=30)
-    direccion = models.TextField()
-    encargado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.nombre
 
 
 class Producto(models.Model):
@@ -53,31 +40,44 @@ class Producto(models.Model):
         ('6', 'Quintal'),
         ('7', 'Litros'),
     )
-    nombre = models.CharField(max_length=30)
-    categoria = models.CharField(max_length=1, choices=CATEGORIAS, default='1')
-    unidades_medidas = models.CharField(max_length=1, choices=MEDIDAS, default='1')
-    cantidad = models.IntegerField()
-    precio_compra = models.FloatField() #precio por unidad
-    precio_venta = models.FloatField()
-    bodega = models.ForeignKey(Bodega, on_delete=models.CASCADE)
-    
-    
+    nombre = models.CharField(max_length=30,null=True, blank=True)
+    categoria = models.CharField(max_length=1, choices=CATEGORIAS, default='1',null=True, blank=True)
+    unidades_medidas = models.CharField(max_length=1, choices=MEDIDAS, default='1',null=True, blank=True)
+    precio = models.FloatField()
+
     def __str__(self):
         return self.nombre
 
+class Bodega(models.Model):
+
+    nombre = models.CharField(max_length=30)
+    direccion = models.TextField(null=True, blank=True)
+    encargado = models.ForeignKey(Empleado, on_delete=models.CASCADE, null=True, blank=True)
+   
+
+    def __str__(self):
+        return self.nombre
+
+class Inventarios_Bodega(models.Model):
+    bodega = models.ForeignKey(Bodega, on_delete=models.CASCADE,null=True, blank=True)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, null=True, blank=True)
+    stock = models.IntegerField(null=True, blank=True) 
+
+    def __str__(self):
+        return f'Bodega {self.bodega} - Producto {self.producto}'
 class Transferencia(models.Model):
-
+    fecha = models.DateField(null=True, blank=True)
     ordenTransferencia = models.CharField(max_length=5) 
-    producto = models.ForeignKey(Producto,related_name="producto" ,on_delete=models.CASCADE)
-    cantidadProducto = models.IntegerField()
-    PrecioProducto = models.IntegerField()
-    totalTransferencia = models.FloatField()
-    bodegaOrigen = models.ForeignKey(Bodega,related_name="bodegaOrigen" ,on_delete=models.CASCADE)
+    cantidadProducto = models.IntegerField(null=True, blank=True)
+    PrecioProducto = models.IntegerField(null=True, blank=True)
+    totalTransferencia = models.FloatField(null=True, blank=True)
+    bodegaOrigen = models.ForeignKey(Bodega,related_name="bodegaOrigen" ,on_delete=models.CASCADE, null=True, blank=True)
     bodegaDestino = models.ForeignKey(Bodega,related_name="bodegaDestino" ,on_delete=models.CASCADE, null=True, blank=True)
-    fecha = models.DateField()
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, null=True, blank=True)
 
-    def _str_(self):
+    def __str__(self):
         return f'{self.ordenTransferencia}'
+
 
 class Venta(models.Model):
 
@@ -90,5 +90,6 @@ class Venta(models.Model):
     totalVenta = models.FloatField()
     fecha = models.DateField()
 
-    def str(self):
+    def __str__(self):
         return f'{self.ordenVenta}'
+
