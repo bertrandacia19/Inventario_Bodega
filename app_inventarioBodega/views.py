@@ -345,21 +345,23 @@ def transferencia(request):
                 inventario_destino = Inventarios_Bodega.objects.filter(bodega=bodega_destino, producto=producto).first()
 
                
-    
-                if inventario_origen.stock >= cant:
-
-                    if inventario_origen:
-                        inventario_origen.stock -= cant
-                        inventario_origen.save()
-
-                    if inventario_destino:
-                        inventario_destino.stock += cant
-                        inventario_destino.save()
-
-                    Transferencia.objects.create(ordenTransferencia=ordenTransferencia,producto=producto,cantidadProducto=cant,PrecioProducto=precio,totalTransferencia=total,bodegaOrigen=bodega_origen,bodegaDestino=bodega_destino,fecha=fecha)
-                    messages.add_message(request, messages.INFO,  f'TRANSFERENCIA REALIZADA EXITOSAMENTE')
+                if bodega_origen == bodega_destino:
+                    messages.add_message(request, messages.ERROR,  f'MISMA BODEGA')
                 else:
-                    messages.add_message(request, messages.ERROR,  f'NO HAY SUFICIENTES PRODUCTOS')
+                    if inventario_origen.stock >= cant:
+
+                        if inventario_origen:
+                            inventario_origen.stock -= cant
+                            inventario_origen.save()
+
+                        if inventario_destino:
+                            inventario_destino.stock += cant
+                            inventario_destino.save()
+
+                        Transferencia.objects.create(ordenTransferencia=ordenTransferencia,producto=producto,cantidadProducto=cant,PrecioProducto=precio,totalTransferencia=total,bodegaOrigen=bodega_origen,bodegaDestino=bodega_destino,fecha=fecha)
+                        messages.add_message(request, messages.INFO,  f'TRANSFERENCIA REALIZADA EXITOSAMENTE')
+                    else:
+                        messages.add_message(request, messages.ERROR,  f'NO HAY SUFICIENTES PRODUCTOS')
         except Exception as e:
             print(e)
             messages.add_message(request, messages.ERROR,  f'OCURRIÓ UN ERROR AL HACER LA TRANSFERENCIA')
