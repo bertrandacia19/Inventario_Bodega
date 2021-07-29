@@ -5,13 +5,7 @@
 {% block container %}
     <div class="row">
         <div class="col-10">
-            {% if messages %}
-                <div class="alert alert-success mb-2">
-                {% for message in messages %}
-                    {{ message}}
-                {% endfor %}
-                </div>
-            {% endif %}
+            
         {% comment %} Tabla que muestra todos los productos {% endcomment %}
             <form action="" method="get" class="alert-{{msj}}">
                 <input type="search" name="q" value="{{ q|default_if_none:'' }}" class="form-control" placeholder="Buscar productos">
@@ -26,27 +20,26 @@
                         <th>Unidad de Medida</th>
                         <th>Proveedor</th>
                         <th>Precio de Venta</th>
-                        <th>Precio de Compra</th>
                         <th>Cantidad</th>
                         <th>Bodega</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for p in productos%}
-                    <tr data-href="{% url 'inventario:actualizarProducto' p.id %}" style="cursor: pointer;">
-                        <td>{{p.nombre}}</td>
-                        <td>{{p.get_categoria_display}}</td>
-                        <td>{{p.get_unidades_medidas_display}}</td>
-                        <td>{{p.proveedor}}</td>
-                        <td>{{p.precio_venta}}</td>
-                        <td>{{p.precio_compra}}</td>
-                        <td>{{p.cantidad}}</td>
-                        <td>{{p.bodega}}</td>
-                    </tr>
+                    {% for i in inv %}
+                        
+                        <tr data-href="{% url 'inventario:actualizarProducto' i.producto.id i.bodega.id %}" style="cursor: pointer;">
+                            <td>{{i.producto.nombre}}</td>
+                            <td>{{i.producto.get_categoria_display}}</td>
+                            <td>{{i.producto.get_unidades_medidas_display}}</td>
+                            <td>{{i.producto.proveedor}}</td>
+                            <td>{{i.producto.precio}}</td>
+                            <td>{{i.stock}}</td>
+                            <td>{{i.bodega}}</td>
+                        </tr>
                     {% empty %}
-                    <tr>
-                        <td colspan="10" class="text-danger text-center">No se encontraron resultados</td>
-                    </tr>
+                        <tr>
+                            <td colspan="10" class="text-danger text-center">No se encontraron resultados</td>
+                        </tr>
                     {% endfor %}
                 </tbody>
                 <tbody>
@@ -59,7 +52,7 @@
         </div>
         <div class="col-2">
         {% if p %}
-            <form action="{% url 'inventario:actualizarProducto' p.id %}" method="post">
+            <form action="{% url 'inventario:actualizarProducto' p.id i.bodega.id %}" method="post">
         {% else %}
             <form action="" method="post">
         {% endif %}
@@ -78,17 +71,24 @@
                     <ul class="list-group list-group-flush">
                         <li value="{{p.categoria}}" class="list-group-item" style="height:4rem;">Categoria:<strong> {{p.get_categoria_display}}</strong></li>
                         <li value="{{p.unidades_medidas}}" class="list-group-item" style="height:4rem;">Unid de Medida:<strong> {{p.get_unidades_medidas_display}}</strong></li>
-                        <li value="{{p.proveedor}}" class="list-group-item" style="height:4rem;">Proveedor:<strong> {{p.proveedor}}</strong></li>
-                        <li value="{{p.cantidad}}" id="cantidad" name="cantidad" class="list-group-item" style="height:4rem;">Cantidad Actual:<strong> {{p.cantidad}}</strong></li>
+                        <li value="{{i.stock}}" id="cantidad" name="cantidad" class="list-group-item" style="height:4rem;">Cantidad Actual:<strong> {{i.stock}}</strong></li>
+                        <li value="{{i.bodega}}" id="cantidad" name="cantidad" class="list-group-item" style="height:4rem;">Bodega:<strong> {{i.bodega}}</strong></li>
                     </ul>
                 </div>
-                <div style="width: 17.5rem; height: 10rem;">
+                <div style="width: 17.5rem; height: 10rem;margin-top: 20px;">
                         <input class="form-control-sm" style="width: 60%;" type="number" name="cantidad" id="cantidad" placeholder="Actualizar Cantidad">
                         <button class="btn btn-actualizar col-3" style="background-color: #FC6E20;">✓</button>
                 </div>
             </form>
         </div>
     </div>
+    {% if messages %}
+        <div class="alert alert-{{msj}} mb-2">
+            {% for message in messages %}
+                {{ message}}
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block js %}

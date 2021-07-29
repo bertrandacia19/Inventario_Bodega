@@ -43,6 +43,13 @@
             </div> 
             
         </form>
+        {% if messages %}
+            <div class="alert alert-{{msj}} mb-2">
+                {% for message in messages %}
+                    {{ message}}
+                {% endfor %}
+            </div>
+        {% endif %}
         <br>
         <hr>
         <div class="row">
@@ -66,4 +73,18 @@
         </div>
         
     </div>    
+{% endblock %}
+
+{% block js %}
+    <script>
+        $(function () {
+        
+        setTimeout(() => {
+            $('.alert').slideUp(function () {
+                $(this).remove();
+            });
+        }, 3000)
+
+        });
+    </script>
 {% endblock %}

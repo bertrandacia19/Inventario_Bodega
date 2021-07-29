@@ -20,7 +20,7 @@ EmpleadosBodega
                 <div class="col-6">
                     <div class="mb-3">
                         <label for="apellido" >Apellido</label>
-                        <input type="text" value="{{ em.apellido }}" name="apellido" id="apellido" class="form-control" required placeholder="Escobar" maxlength="20">
+                        <input type="text" value="{{ em.apellido }}" name="apellido" id="apellido" class="form-control" required placeholder="Gomez" maxlength="20">
                     </div>
                 </div>
             </div>
@@ -44,7 +44,7 @@ EmpleadosBodega
                 <div class="col-6">
                     <div class="mb-3">
                         <label for="correo" >Correo Electrónico</label>
-                        <input type="email" value="{{ em.correo }}" name="correo" id="correo" class="form-control" required placeholder="Elpatrono@gmail.com" maxlength="60">
+                        <input type="email" value="{{ em.correo }}" name="correo" id="correo" class="form-control" required placeholder="pgomez@gmail.com" maxlength="60">
                     </div>
                 </div>
                 <div class="col-6">
@@ -102,11 +102,12 @@ EmpleadosBodega
 {% block js %}
     <script>
         $(function () {
-            setTimeout(() => {
-                $('.alert').slideUp(function () {
-                    $(this).remove();
-                });
-            }, 3000)
+        
+        setTimeout(() => {
+            $('.alert').slideUp(function () {
+                $(this).remove();
+            });
+        }, 3000)
 
         });
     </script>

@@ -95,16 +95,17 @@ Clientes
 
 {% block js %}
     
-   <script>
+    <script>
         $(function () {
-            setTimeout(() => {
-                $('.alert').slideUp(function () {
-                    $(this).remove();
-                });
-            }, 3000)
+        
+        setTimeout(() => {
+            $('.alert').slideUp(function () {
+                $(this).remove();
+            });
+        }, 3000)
 
         });
-   </script>
+    </script>
 
 {% endblock %}
     

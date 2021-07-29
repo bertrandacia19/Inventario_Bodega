@@ -8,7 +8,7 @@ Nuevo Producto
     <div class="row">
         <div class="col-2">
             {% if p %}
-                <form action="{% url 'inventario:modificarProducto' p.id %}" method="post">
+                <form action="{% url 'inventario:modificarProducto' p.id i.bodega.id %}" method="post">
             {% else %}
                 <form action="" method="post">
             {% endif %}
@@ -59,7 +59,7 @@ Nuevo Producto
 
                 <div class="mb-3">
                     <label for="cantidad">Cantidad</label><br>
-                    <input type="text" value="{{p.cantidad}}" name="cantidad" id="cantidad" class="form-control" required>
+                    <input type="text" value="{{i.stock}}" name="cantidad" id="cantidad" class="form-control" required>
                 </div>
 
                 <div class="mb-3">
@@ -68,8 +68,8 @@ Nuevo Producto
                         <option value="">Seleccione Bodega</option>
                             {% if p %}
                                 {% for b in bodega %}
-                                    {% if b.bodega == i %}
-                                        <option value="{{i.id}}">{{i.nombre}}</option>
+                                    {% if b == i.bodega %}
+                                        <option value="{{b.id}}" selected>{{b.nombre}}</option>
                                     {% endif %}
                                 {% endfor %}
                             {% else %}
@@ -94,13 +94,7 @@ Nuevo Producto
         
         {% comment %} Tabla que muestra todos los productos {% endcomment %}
         <div class="col-10">
-            {% if messages %}
-                <div class="alert alert-{{msj}} mb-2">
-                {% for message in messages %}
-                    {{ message}}
-                {% endfor %}
-                </div>
-            {% endif %}
+            
             <form action="{% url 'inventario:nuevoProducto' %}" method="get">
                 <input type="search" name="q" value="{{ q|default_if_none:'' }}" class="form-control" autocomplete="off" placeholder="Buscar productos">
             </form><br>
@@ -122,18 +116,37 @@ Nuevo Producto
 
                     {% for i in inventario %}
                         <tr data-href="{% url 'inventario:modificarProducto' i.producto.id i.bodega.id %}" style="cursor: pointer;">
-                            {% for p in productos  %}
-                                {% if p.id == i.producto.id  %}
-                                    <td class="text-center">{{p.nombre}}</td>
-                                    <td class="text-center">{{p.get_categoria_display}}</td>
-                                    <td class="text-center">{{p.get_unidades_medidas_display}}</td>
-                                    <td class="text-center">{{p.proveedor}}</td>
-                                    <td class="text-center">{{p.precio}}</td>
-                                    <td class="text-center">{{p.ordenCompra}}</td>
-                                {% endif %}
-                            {% endfor %}
-                            <td class="text-center">{{i.stock}}</td>
-                            <td class="text-center">{{i.bodega}}</td>
+                            {% if q %}
+                                {% for p in productos  %}
+                                    {% if p.id == i.producto.id  %}
+                                        <td class="text-center">{{p.nombre}}</td>
+                                        <td class="text-center">{{p.get_categoria_display}}</td>
+                                        <td class="text-center">{{p.get_unidades_medidas_display}}</td>
+                                        <td class="text-center">{{p.proveedor}}</td>
+                                        <td class="text-center">{{p.precio}}</td>
+                                        <td class="text-center">{{p.ordenCompra}}</td>
+                                        <td class="text-center">{{i.stock}}</td>
+                                        <td class="text-center">{{i.bodega}}</td>
+
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                {% for p in productos  %}
+                                    {% if p.id == i.producto.id  %}
+                                        <td class="text-center">{{p.nombre}}</td>
+                                        <td class="text-center">{{p.get_categoria_display}}</td>
+                                        <td class="text-center">{{p.get_unidades_medidas_display}}</td>
+                                        <td class="text-center">{{p.proveedor}}</td>
+                                        <td class="text-center">{{p.precio}}</td>
+                                        <td class="text-center">{{p.ordenCompra}}</td>
+                                        <td class="text-center">{{i.stock}}</td>
+                                        <td class="text-center">{{i.bodega}}</td>
+
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                                
+                            
 
                             
                         </tr>
@@ -144,7 +157,15 @@ Nuevo Producto
                     {% endfor %}
                 </tbody>
             </table>
+            {% if messages %}
+                <div class="alert alert-{{msj}} mb-2">
+                    {% for message in messages %}
+                        {{ message}}
+                    {% endfor %}                
+                </div>    
+            {% endif %}
         </div>
+        
     </div>
 {% endblock %}
 
