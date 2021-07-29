@@ -3,19 +3,25 @@
 {% block title %}Ventas{% endblock  %}
 
 {% block container %}
+    {% if messages %}
+        <div class="alert alert-{{msj}} mb-2">
+            {% for message in messages %}
+                {{ message}}
+            {% endfor %}
+        </div>
+    {% endif %}
 
     <div class="row ">
         <div class="col-9 mb-3" >
             <h2> Detalles Productos</h2>
-             <select name="productos" id="productos" class="form-select form-control-chosen">
-                        <option value=" "> Buscar Producto </option>
-                      {%for p in productos %}
-                            <option value="{{p.id}}">{{p.nombre}}   -  {{p.categoria}} - {{p.precio}}</option>
-                       {%endfor%}
-    
-                    </select>
+            <select name="productos" id="productos" class="form-select form-control-chosen">
+                <option value=" "> Buscar Producto </option>
+                    {% for p in productos %}
+                        <option value="{{p.id}}">{{p.nombre}}   -  {{p.categoria}} - {{p.precio}}</option>
+                    {% endfor %}
+            </select>
             <br>
-             <br>
+            <br>
             <table class="table table-dark">
                 <thead>
                     <tr>
@@ -29,7 +35,6 @@
                 </thead>
                 <tbody id="tabla">
                 </tbody>
-
             </table>
         </div>
         <div class="col-3">
@@ -43,58 +48,44 @@
                 <p>
                     <label for="clientes">Cliente</label>
                     <select name="clientes" id="clientes" class="form-select form-control-chosen">
-                     <option value=" "> Buscar Cliente </option>
-                        {%for c in clientes %}
+                        {% for c in clientes %}
                             <option value="{{c.id}}">{{c.nombre}} {{c.apellido}} </option>
-                        {%endfor%}
- 
+                        {% endfor %}
                     </select>
                 </p>
                 <p class="mb-3">
                     <label for="empleados">Empleado</label>
                     <select name="empleados" id="empleados" style="width:100%; height:2.5rem; border-radius: 8px;"  class="form-select form-control-chosen">
-                          <option value=" "> Buscar Empleado </option>
-                        {%for e in empleados %}
+                        {% for e in empleados %}
                             <option value="{{e.id}}">{{e.nombre}} {{e.apellido}} </option>
-                        {%endfor%}
- 
+                        {% endfor %}
                     </select>
                 </p>
                 <div class="mb-3">
                     <label for="subtotal">Subtotal</label>
                     <input type="number" name="subtotal" id="subtotal" class="form-control" required readonly>
-                </div>
-    
+                </div> 
                 <div class="mb-3">
                     <label for="ISV">ISV</label>
-                   <input type="number" class="form-control" readonly name="ISV" value="0.15">
+                   <input type="number" class="form-control" id="ISV" readonly name="ISV" value="0.15">
                 </div>
                 <div class="mb-3">
-                    <label for="Descuento">Descuento</label>
-                    <input type="number" name="Descuento" id="Descuento" class="form-control" required>
+                    <label for="total">Total </label>
+                   <input type="number" class="form-control" readonly id ="total" name="total" value="0.00">
                 </div>
                 <div class="mb-3">
-                    <label for="Total">Total </label>
-                   <input type="number" class="form-control" readonly name="Total" value="0.00">
+                      <input type="submit" class="btn cards"  value="Pagar">
                 </div>
-    
                 <div class="mb-3">
-                    <input type="submit" class="btn cards" value="Pagar">
-                </div>
-                 <div class="mb-3">
                     <input type="submit" class="btn cards" value="Cancelar">
                 </div>
             </form>
         </div>
     </div>
-
-
 {% endblock %}
 
-
 {% block js %}
-
-<script>
+    <script>
         var fecha = new Date(); //Fecha actual
         var mes = fecha.getMonth()+1; //obteniendo mes
         var dia = fecha.getDate(); //obteniendo dia
@@ -105,13 +96,12 @@
             mes='0'+mes //agrega cero si el menor de 10
         document.getElementById('fecha').value=ano+"-"+mes+"-"+dia;
        
-       function deleteRow(btn) {
-    var row = btn.parentNode.parentNode;
-     row.parentNode.removeChild(row);
-     prueba()
-}
-
-
+        function deleteRow(btn) 
+        {
+        var row = btn.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+        prueba()
+        }
 
         var productosAgregado = []
         $(document).ready(function(){
@@ -120,7 +110,6 @@
                 var id = this.value;
                 var link = `/inventario/producto/${id}/`;
 
-              
                 $.ajax({
                     url: link,
                 }).done(function(res){
@@ -135,40 +124,47 @@
                     html += `<td>${res.nombre}</td>`;
                     html += `<td>${res.categoria}</td>`;
                     html += `<td><input type="number" value="${res.precio}" name="precio" class="precio" id="precio" style="width: 100%;" readonly></td>`;
-                    html += `<td style="width: 135px;"><input type="number"  name="cantidad" class="cantidad" id="cantidad" onchange="prueba()" style="width: 100%;"></td>`;
+                    html += `<td style="width: 135px;"><input type="number"  min="1" step="any" name="cantidad" class="cantidad" id="cantidad" onchange="prueba()" style="width: 100%;"></td>`;
                     html += `<td style="width: 135px;"><input type="number" name="subtotal" class="subTotal" id="subTotal" style="width: 100%;" readonly></td>`;
                     html += `<td><input type="button" value="Delete" onclick="deleteRow(this)"/></td>
 `;
                     html += '</tr>';
 
                     $('#tabla').append(html)
-
                 })
                 //return false;
             });
         });
-         function prueba()
-    {
-         var  subtotal = 0.00;
-        let subTotal = document.getElementsByClassName("subTotal")
-        let cantidad = document.getElementsByClassName("cantidad")
-        let precio = document.getElementsByClassName("precio")
-        
-        for (var i = 0; i < precio.length; i++) {
-            subTotal.item(i).value = parseInt(cantidad.item(i).value) * parseFloat(precio.item(i).value)
-            subtotal +=parseInt(cantidad.item(i).value) * parseFloat(precio.item(i).value)
+
+        function prueba()
+        {
+            var  subtotal = 0.00;
+            let subTotal = document.getElementsByClassName("subTotal")
+            let cantidad = document.getElementsByClassName("cantidad")
+            let precio = document.getElementsByClassName("precio")
+            
+            for (var i = 0; i < precio.length; i++) 
+            {
+                subTotal.item(i).value = parseInt(cantidad.item(i).value) * parseFloat(precio.item(i).value)
+                subtotal +=parseInt(cantidad.item(i).value) * parseFloat(precio.item(i).value)
+            }
+            let st=document.getElementById("subtotal")
+            st.value=subtotal
+            ISV=subtotal*0.15
+            $("input[name=ISV]").val(ISV);
+
+            //se carga el total en el campo correspondiente
+            Total=subtotal+ISV
+            $("input[name=total]").val(Total);
         }
-        let st=document.getElementById("subtotal")
-        st.value=subtotal
 
-
-        
-    }
-
-
+     $(function () 
+     {
+        setTimeout(() => {
+            $('.alert').slideUp(function () {
+                $(this).remove();
+            });
+        }, 2000)
+    });
 </script>
-
-
-
-
 {% endblock  %}

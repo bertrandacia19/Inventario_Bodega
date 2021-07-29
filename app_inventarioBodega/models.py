@@ -102,7 +102,6 @@ class Venta(models.Model):
     empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
     subTotal = models.FloatField()
     isv = models.FloatField()
-    descuento = models.FloatField()
     total = models.FloatField()
 
     def __str__(self):

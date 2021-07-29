@@ -390,42 +390,44 @@ def inventario(request):
     }
 
     return render(request, 'bodega/inventario.html',ctx)
+
+    #Venta
 @login_required()
 def venta(request):
 
-    data = Venta.objects.all()
-    empleados = Empleado.objects.all().order_by('fechaIngreso')
-    clientes =Cliente.objects.all().order_by('nombre')
-    if request.method == "POST":
-        #informacion de venta
-        producto = request.POST.get('producto')
-        cantidadProducto = request.POST.get('cantidadProducto')
-        PrecioProducto = request.POST.get('PrecioProducto')
-        descuento = request.POST.get('descuento')
-        ISV = request.POST.get('ISV')
-        subTotal = request.POST.get('subTotal')
-        totalVenta = request.POST.get('totalVenta')
-        fecha = request.POST.get('fechaIngreso')
-  
-        em = venta(producto=producto,cantidadProducto=cantidadProducto, PrecioProducto=PrecioProducto, descuento=descuento, ISV=ISV, subTotal=subTotal,totalVenta=totalVenta, fecha=fecha)
-        em.save() #insert a la base de datos
+    empleados = Empleado.objects.all().order_by('nombre')
+    clientes = Cliente.objects.all().order_by('nombre')
+    
+    if request.method == 'POST':
+        try:
+            with transaction.atomic():
 
+                fecha = request.POST.get('fecha')
+                cliente= get_object_or_404(Cliente, pk=request.POST.get('clientes'))
+                empleado = get_object_or_404(Empleado, pk=request.POST.get('empleados'))
+                subTotal = request.POST.get('subtotal')
+                ISV = request.POST.get('ISV')
+                totalVenta = request.POST.get('total')
+
+                Venta.objects.create(fecha=fecha,cliente=cliente,empleado=empleado,subTotal=subTotal,isv=ISV,total=totalVenta)
+                messages.add_message(request, messages.INFO,  f'VENTA REALIZADA EXITOSAMENTE')
+
+        except Exception as e:
+            print(e)
+            messages.add_message(request, messages.ERROR,  f'OCURRIÓ UN ERROR AL HACER LA VENTA')
 
     ctx = {
-        'venta' : data,
         'productos': Producto.objects.all().order_by('nombre'),
         'empleados': empleados,
         'clientes':clientes,
-
+        'msj':'success',
     }
-
     return render(request, 'bodega/venta.html',ctx)
 
 
 
 def productoVenta(request,id):
     p = get_object_or_404(Producto, pk=id)
-    cantidad = request.POST.get('cantidad')
     productos = Producto.objects.all().order_by('nombre')
     ctx ={
             'productos': productos,
