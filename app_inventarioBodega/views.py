@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render,redirect, reverse
 from django.contrib.auth.decorators import login_required
-from .models import Bodega, Producto, Transferencia
+from .models import Bodega, Producto, Transferencia,Inventarios_Bodega
 from django.contrib.auth.decorators import user_passes_test
 from django.db import transaction
 from decimal import Decimal
