@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Empleado,Bodega,Producto,Transferencia,Venta,Inventarios_Bodega, DetalleFactura, Cliente
+from .models import *
 # Register your models here.
 
 class EmpleadoAdmin(admin.ModelAdmin):

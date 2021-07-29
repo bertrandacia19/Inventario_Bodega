@@ -298,6 +298,7 @@ def modificarProducto(request, id, id_bodega):
 
 @login_required()
 def transferencia(request):
+    
     bodegas = Bodega.objects.all().order_by('nombre')
     productos_list = Producto.objects.all().order_by('nombre')
 
@@ -332,6 +333,11 @@ def transferencia(request):
                 else:
                     if inventario_origen.stock >= cant:
 
+                        try:
+                            Inventarios_Bodega.objects.get(bodega=bodega_destino, producto=producto)
+                        except:
+                            Inventarios_Bodega.objects.create(stock=0, producto=producto, bodega=bodega_destino)
+                            inventario_destino= Inventarios_Bodega.objects.filter(bodega=bodega_destino, producto=producto).first()
                         if inventario_origen:
                             inventario_origen.stock -= cant
                             inventario_origen.save()
@@ -380,6 +386,7 @@ def clientes(request):
     }
     return render(request, 'bodega/clientes.html', ctx)
 
+
 @login_required()
 def inventario(request):
 
@@ -392,6 +399,8 @@ def inventario(request):
     return render(request, 'bodega/inventario.html',ctx)
 
     #Venta
+
+
 @login_required()
 def venta(request):
 
@@ -425,7 +434,6 @@ def venta(request):
     return render(request, 'bodega/venta.html',ctx)
 
 
-
 def productoVenta(request,id):
     p = get_object_or_404(Producto, pk=id)
     productos = Producto.objects.all().order_by('nombre')
@@ -436,8 +444,6 @@ def productoVenta(request,id):
     }
 
     return render(request, 'bodega/venta.html', ctx)
-
-
 
 
 def infoProducto(request, id):

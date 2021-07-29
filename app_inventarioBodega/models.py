@@ -15,7 +15,7 @@ class Empleado(models.Model):
     fechaIngreso = models.DateField()
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
 
-    def _str_(self):
+    def __str__(self):
         return f'{self.nombre} {self.apellido}'
 
 
@@ -39,6 +39,7 @@ class Producto(models.Model):
         ('5', 'Media docena'),
         ('6', 'Quintal'),
         ('7', 'Litros'),
+        ('8', 'Galon'),
     )
     nombre = models.CharField(max_length=30)
     categoria = models.CharField(max_length=1, choices=CATEGORIAS, default='1')
@@ -47,10 +48,8 @@ class Producto(models.Model):
     precio = models.FloatField()
     ordenCompra = models.CharField(max_length=10)
 
-    def _str_(self):
+    def __str__(self):
         return self.nombre
-
-
 
 class Bodega(models.Model):
 
@@ -102,6 +101,7 @@ class Venta(models.Model):
     empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
     subTotal = models.FloatField()
     isv = models.FloatField()
+    descuento = models.FloatField(null=True, blank=True)
     total = models.FloatField()
 
     def __str__(self):
