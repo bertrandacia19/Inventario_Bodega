@@ -309,7 +309,6 @@ def modificarProducto(request, id, id_bodega):
 def transferencia(request):
     bodegas = Bodega.objects.all().order_by('nombre')
     productos_list = Producto.objects.all().order_by('nombre')
-    #productos = Producto.objects.filter(bodega=13)
 
     if request.method == 'POST':
         try:
@@ -385,7 +384,15 @@ def clientes(request):
         'clientes' : data,
         'msj':'success',
     }
-
-
-
     return render(request, 'bodega/clientes.html', ctx)
+
+@login_required()
+def inventario(request):
+    
+    inventario_bodega = Inventarios_Bodega.objects.all().order_by('producto')
+
+    ctx = {
+        'inventario_bodega': inventario_bodega,
+    }
+
+    return render(request, 'bodega/inventario.html',ctx)
