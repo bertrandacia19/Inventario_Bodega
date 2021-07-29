@@ -1,5 +1,7 @@
 from django.http.response import JsonResponse
-from django.shortcuts import get_object_or_404, render,redirect, reverse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
+from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from .models import Bodega, Cliente,Empleado,Venta,Producto
 #Vistas
@@ -95,6 +97,8 @@ def venta(request):
 
     return render(request, 'bodega/venta.html',ctx)
 
+
+
 def productoVenta(request,id):
     p = get_object_or_404(Producto, pk=id)
     cantidad = request.POST.get('cantidad')
@@ -106,6 +110,9 @@ def productoVenta(request,id):
     }
 
     return render(request, 'bodega/venta.html', ctx)
+
+
+
 
 def infoProducto(request, id):
     producto = get_object_or_404(Producto, pk=id)
