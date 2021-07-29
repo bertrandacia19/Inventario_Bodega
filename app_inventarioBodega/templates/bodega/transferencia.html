@@ -7,9 +7,11 @@ Transferencias de bodegas
 
 {% block container %}
     {% if messages %}
-        {% for message in messages  %}
-            <div class="alert alert-success">{{ message }}</div>
-        {% endfor %}
+        <div class="alert alert-success mb-2">
+            {% for message in messages %}
+                {{ message}}
+            {% endfor %}                
+        </div>    
     {% endif %}
     <div class="container" style="color: #FFFFFF">
         <h1>Transferencias de bodegas</h1>
@@ -98,6 +100,9 @@ Transferencias de bodegas
 
 {% block js %}
     <script>
+        
+    </script>
+    <script>
         $(function () {
             productoPrecio()
         });
@@ -124,7 +129,18 @@ Transferencias de bodegas
             total.value = parseInt(cantidad.value) * parseFloat(precio.value)
         }
 
+        $(function () {
+        
+        setTimeout(() => {
+            $('.alert').slideUp(function () {
+                $(this).remove();
+            });
+        }, 3000)
+
+        });
+
     </script>
+    
 {% endblock %}
 
 

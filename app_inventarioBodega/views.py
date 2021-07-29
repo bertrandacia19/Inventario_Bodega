@@ -1,8 +1,7 @@
-from django.db.models.deletion import PROTECT
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render,redirect, reverse
 from django.contrib.auth.decorators import login_required
-from .models import Bodega,Empleado,Producto, Transferencia, Inventarios_Bodega, Cliente
+from .models import *
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
 from django.db import transaction
@@ -181,35 +180,10 @@ def nuevoProducto(request):
 
 @login_required()
 def cantidadProducto(request):
-    
-    q = request.GET.get('q')
-
-    if q:
-        if Producto.objects.filter(nombre__startswith=q):
-            inventario = Producto.objects.filter(nombre__startswith=q).order_by('nombre')
-        elif Producto.objects.filter(precio__startswith=q):
-            inventario = Producto.objects.filter(precio__startswith=q).order_by('precio')
-        elif Producto.objects.filter(proveedor__startswith=q):
-            inventario = Producto.objects.filter(proveedor__startswith=q).order_by('proveedor')
-        elif Producto.objects.filter(ordenCompra__startswith=q):
-            inventario = Producto.objects.filter(ordenCompra__startswith=q)
-        else:
-            productos_choices = Producto.objects.all()
-            inventario = ""
-            for x in productos_choices:
-                if x.get_categoria_display().startswith(q):
-                    inventario = Producto.objects.filter(categoria__startswith=x.categoria).order_by('categoria')
-                elif x.get_unidades_medidas_display().startswith(q):
-                    inventario = Producto.objects.filter(unidades_medidas__startswith=x.unidades_medidas).order_by('unidades_medidas')
-                elif inventario == "":
-                    inventario = Producto.objects.all().order_by('nombre')
-    else:
-       inventario = Producto.objects.all().order_by('nombre')
-        
+    inventario = Inventarios_Bodega.objects.all()
     productos = Producto.objects.all()
     ctx ={
         'productos': productos,
-        'q': q,
         'bodega': Bodega.objects.all(),
         'inv' : inventario
     }
@@ -219,6 +193,7 @@ def cantidadProducto(request):
 @login_required
 def actualizarProducto(request, id, id_bodega):
     dicti ={'p': id, 'b': id_bodega}
+    print(dicti)
     ip = get_object_or_404(Inventarios_Bodega, producto=dicti.get('p'), bodega=dicti.get('b'))
     p = Producto.objects.get(pk=dicti.get('p'))
     if request.method == 'POST':
@@ -359,6 +334,7 @@ def transferencia(request):
                             inventario_destino.save()
 
                         Transferencia.objects.create(ordenTransferencia=ordenTransferencia,producto=producto,cantidadProducto=cant,PrecioProducto=precio,totalTransferencia=total,bodegaOrigen=bodega_origen,bodegaDestino=bodega_destino,fecha=fecha)
+                        
                         messages.add_message(request, messages.INFO,  f'TRANSFERENCIA REALIZADA EXITOSAMENTE')
                     else:
                         messages.add_message(request, messages.ERROR,  f'NO HAY SUFICIENTES PRODUCTOS')
@@ -399,17 +375,11 @@ def clientes(request):
 
 @login_required()
 def inventario(request):
-    q = request.GET.get('q')
-    if q:
-        pass
-    else:
-        productos = Producto.objects.all().order_by('nombre')
 
     inventario_bodega = Inventarios_Bodega.objects.all().order_by('producto')
 
     ctx = {
         'inventario_bodega': inventario_bodega,
-        'q' : q,
     }
 
     return render(request, 'bodega/inventario.html',ctx)

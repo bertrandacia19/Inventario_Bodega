@@ -6,25 +6,22 @@ Inventario
 
 {% block container %}
     <div class="row">
-        <form action="{% url 'inventario:inventario' %}" method="get">
-            <input type="search" name="q" value="{{ q|default_if_none:'' }}" class="form-control" placeholder="Buscar participantes">
-        </form>
         <h1>Inventario</h1>
         <br>
         <table class="table table-hover table-dark table-striped">
             <thead>
                 <tr>
-                    <th>Producto</th>
-                    <th>Bodega</th>
-                    <th>Cantidad</th>
+                    <th class="text-center">Producto</th>
+                    <th class="text-center">Bodega</th>
+                    <th class="text-center">Cantidad</th>
                 </tr>
             </thead>
             <tbody>
                 {% for i in inventario_bodega %}
                     <tr>
-                        <td>{{i.producto}}</td>
-                        <td>{{i.bodega}}</td>
-                        <td>{{i.stock}}</td>
+                        <td class="text-center">{{i.producto}}</td>
+                        <td class="text-center">{{i.bodega}}</td>
+                        <td class="text-center">{{i.stock}}</td>
                     </tr>
                 {% empty %}
                     <tr>
