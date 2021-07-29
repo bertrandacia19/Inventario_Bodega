@@ -48,17 +48,9 @@ class Producto(models.Model):
     ordenCompra = models.CharField(max_length=10)
 
     def _str_(self):
-        return f'{self.nombre} - {self.categoria} - {self.precio}'
-
-class Bodega(models.Model):
-
-    nombre = models.CharField(max_length=30)
-    direccion = models.TextField()
-    encargado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
-   
-
-    def _str_(self):
         return self.nombre
+
+
 
 class Bodega(models.Model):
 
