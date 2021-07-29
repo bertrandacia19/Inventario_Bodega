@@ -38,7 +38,7 @@
                 {% csrf_token %}
                 <div class="mb-3">
                     <label for="Fecha" >Fecha</label>
-                    <input type="date" name="fecha" id="fecha" class="form-control" required autofocus  >
+                    <input type="date" name="fecha" id="fecha" class="form-control" required autofocus  readonly>
                 </div>
                 <p>
                     <label for="clientes">Cliente</label>
@@ -81,6 +81,9 @@
                 <div class="mb-3">
                     <input type="submit" class="btn cards" value="Pagar">
                 </div>
+                 <div class="mb-3">
+                    <input type="submit" class="btn cards" value="Cancelar">
+                </div>
             </form>
         </div>
     </div>
@@ -105,6 +108,7 @@
        function deleteRow(btn) {
     var row = btn.parentNode.parentNode;
      row.parentNode.removeChild(row);
+     prueba()
 }
 
 
@@ -130,9 +134,9 @@
                     var html = '<tr>';
                     html += `<td>${res.nombre}</td>`;
                     html += `<td>${res.categoria}</td>`;
-                    html += `<td><input type="number" value="${res.precio}" name="precio" id="precio" style="width: 100%;" readonly></td>`;
-                    html += `<td style="width: 135px;"><input type="number"  name="cantidad" id="cantidad" onchange="prueba()" style="width: 100%;"></td>`;
-                    html += `<td style="width: 135px;"><input type="number" name="subtotal" id="subTotal" style="width: 100%;" readonly></td>`;
+                    html += `<td><input type="number" value="${res.precio}" name="precio" class="precio" id="precio" style="width: 100%;" readonly></td>`;
+                    html += `<td style="width: 135px;"><input type="number"  name="cantidad" class="cantidad" id="cantidad" onchange="prueba()" style="width: 100%;"></td>`;
+                    html += `<td style="width: 135px;"><input type="number" name="subtotal" class="subTotal" id="subTotal" style="width: 100%;" readonly></td>`;
                     html += `<td><input type="button" value="Delete" onclick="deleteRow(this)"/></td>
 `;
                     html += '</tr>';
@@ -143,15 +147,24 @@
                 //return false;
             });
         });
-   
-    function prueba()
+         function prueba()
     {
-        let subTotal = document.getElementById("subTotal")
-        let cantidad = document.getElementById("cantidad")
-        let precio = document.getElementById("precio")
+         var  subtotal = 0.00;
+        let subTotal = document.getElementsByClassName("subTotal")
+        let cantidad = document.getElementsByClassName("cantidad")
+        let precio = document.getElementsByClassName("precio")
+        
+        for (var i = 0; i < precio.length; i++) {
+            subTotal.item(i).value = parseInt(cantidad.item(i).value) * parseFloat(precio.item(i).value)
+            subtotal +=parseInt(cantidad.item(i).value) * parseFloat(precio.item(i).value)
+        }
+        let st=document.getElementById("subtotal")
+        st.value=subtotal
 
-        subTotal.value = parseInt(cantidad.value) * parseFloat(precio.value)
+
+        
     }
+
 
 </script>
 
