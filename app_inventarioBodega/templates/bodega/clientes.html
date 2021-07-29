@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+<!-- bloques de plantilla -->
+
+{% block title %}
+Clientes
+{% endblock %}
+
+{% block container %}
+    <div class="container" style="color: #FFFFFF">
+        <h1>Clientes</h1>
+        <form action="{% url 'inventario:clientes' %}" method="POST">
+            {% csrf_token %}
+            <div class="row mb-4">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="nombre" >Nombre</label>
+                        <input type="text" value="{{ clien.nombre }}" name="nombre" id="nombre" class="form-control" required placeholder="Martha" autofocus maxlength="20">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="apellido" >Apellido</label>
+                        <input type="text" value="{{ clien.apellido }}" name="apellido" id="apellido" class="form-control" required placeholder="Sanchez" maxlength="20">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="telefono" >Numero de Telefono</label>
+                        <input type="number" value="{{ clien.telefono }}" name="telefono" id="telefono" class="form-control" required placeholder="99856544" maxlength="100">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="correo" >Correo Electronico</label>
+                        <input type="email" value="{{ clien.correo }}" name="correo" id="correo" class="form-control" required placeholder="ejemplo@gmail.com">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="direccion" >Direccion</label>
+                        <input type="text" value="{{ clien.direccion }}" name="direccion" id="direccion" class="form-control" required placeholder="Barrio la julia, La Ceiba, Atlántida" maxlength="60">
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-3">
+                    <div class="mb-3">
+                        <input type="submit" class="btn cards"  value="Registrar">
+                    </div>
+                </div>
+            </div> 
+            
+        </form>
+        {% if messages %}
+            <div class="alert alert-{{msj}} mb-2">
+                {% for message in messages %}
+                    {{ message}}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <br>
+        <hr>
+        <div class="row">
+            {% for c in clientes %}
+                <div class="col-3">
+                    <div class="card mb-4 cards-shadow">
+                        <div class="card-body">
+                            <h5 class="card-title " style="color: black; height: 3rem;">{{ c.nombre }} {{ c.apellido}} </h5>
+                            
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Teléfono: <strong>{{ c.telefono }}</strong></li>
+                            <li class="list-group-item">Correo: <br> <strong>{{ c.correo }}</strong></li>
+                            <li class="list-group-item" style="height: 6rem;">Dirección: <br><strong>{{ c.direccion }} </strong></li>
+                        </ul>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="alert alert-danger">No hay clientes en este momento</div>
+            {% endfor %}
+        </div>
+        
+    </div>    
+{% endblock %}
+
+
+{% block js %}
+    
+    <script>
+        $(function () {
+        
+        setTimeout(() => {
+            $('.alert').slideUp(function () {
+                $(this).remove();
+            });
+        }, 3000)
+
+        });
+    </script>
+
+{% endblock %}
+    
