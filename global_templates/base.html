@@ -12,6 +12,7 @@
     <link href="{% static 'inventario/css/menu.css' %}" rel="stylesheet">
     <link href="{% static 'inventario/css/style.css' %}" rel="stylesheet">
     <link href="https://haubek.github.io/dist/css/component-chosen.min.css" rel="stylesheet">
+    {% block css %}{% endblock %}
 </head>
 <body class="body">
     <div class="container">
@@ -20,8 +21,7 @@
           <i class="fas fa-bars" id="btn"></i>
           <i class="fas fa-times" id="cancel" style="color: wheat;"></i>
         </label>
-    
-        
+
           <div class="sidebar">
             <div class="toggle-btn" onclick="toggleSidebar()"></div>
             <a href="{% url 'inventario:index' %}" class="as" style="text-decoration: none;"><header>Inicio</header></a>
@@ -38,7 +38,7 @@
               <li><a href="{% url 'inventario:inventario' %}" class="links"><i class="fas fa-cash-register"></i>Inventario</a></li>
               <li><a href="{% url 'inventario:clientes'%}" class="links"><i class="fas far fa-address-card"></i>Cliente</a></li>
               <li><a href="{% url 'inventario:transferencia' %}" class="links"><i class="fas fa-shipping-fast"></i>Transferencias</a></li>
-              <li><a href="#" class="links"><i class="fas fa-cash-register"></i>Venta de Productos</a></li>
+              <li><a href="{% url 'inventario:venta' %}" class="links"><i class="fas fa-cash-register"></i>Venta de Productos</a></li>
               <li><a class="links">Logueado como <strong>{{ request.user }}</strong></a></li>
               <li><a href="{% url 'logout_view' %}" class="links"><i class="fas fa-sign-out-alt"></i>Salir</a></li>
             

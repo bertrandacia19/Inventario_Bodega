@@ -2,11 +2,18 @@ from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render,redirect, reverse
 from django.contrib.auth.decorators import login_required
 from .models import *
+from datetime import datetime
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
 from django.db import transaction
 from decimal import Decimal
 #Vistas
+
+
+# Create your views here.
+
+def index(request):
+    return render(request, 'bodega/index.html')
 
 @login_required()
 def index(request):
@@ -62,7 +69,7 @@ def bodega(request):
         encargado = get_object_or_404(Empleado, pk=request.POST.get('encargado'))
 
         b = Bodega(nombre=nombre, direccion=direccion, encargado=encargado)
-        b.save() 
+        b.save()
 
         msj = f'Bodega registrada exitosamente'
         messages.add_message(request,messages.INFO, msj)
@@ -383,3 +390,56 @@ def inventario(request):
     }
 
     return render(request, 'bodega/inventario.html',ctx)
+@login_required()
+def venta(request):
+
+    data = Venta.objects.all()
+    empleados = Empleado.objects.all().order_by('fechaIngreso')
+    clientes =Cliente.objects.all().order_by('nombre')
+    if request.method == "POST":
+        #informacion de venta
+        producto = request.POST.get('producto')
+        cantidadProducto = request.POST.get('cantidadProducto')
+        PrecioProducto = request.POST.get('PrecioProducto')
+        descuento = request.POST.get('descuento')
+        ISV = request.POST.get('ISV')
+        subTotal = request.POST.get('subTotal')
+        totalVenta = request.POST.get('totalVenta')
+        fecha = request.POST.get('fechaIngreso')
+  
+        em = venta(producto=producto,cantidadProducto=cantidadProducto, PrecioProducto=PrecioProducto, descuento=descuento, ISV=ISV, subTotal=subTotal,totalVenta=totalVenta, fecha=fecha)
+        em.save() #insert a la base de datos
+
+
+    ctx = {
+        'venta' : data,
+        'productos': Producto.objects.all().order_by('nombre'),
+        'empleados': empleados,
+        'clientes':clientes,
+
+    }
+
+    return render(request, 'bodega/venta.html',ctx)
+
+
+
+def productoVenta(request,id):
+    p = get_object_or_404(Producto, pk=id)
+    cantidad = request.POST.get('cantidad')
+    productos = Producto.objects.all().order_by('nombre')
+    ctx ={
+            'productos': productos,
+            'p':p,
+           
+    }
+
+    return render(request, 'bodega/venta.html', ctx)
+
+
+
+
+def infoProducto(request, id):
+    producto = get_object_or_404(Producto, pk=id)
+
+    
+    return JsonResponse({'id': producto.id, 'nombre' : producto.nombre, 'categoria' : producto.categoria, 'precio': producto.precio})
