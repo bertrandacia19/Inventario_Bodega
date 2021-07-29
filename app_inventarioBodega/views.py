@@ -77,16 +77,25 @@ def bodega(request):
 @login_required()
 def nuevoProducto(request):
     if request.method == 'POST':
-        nombre = request.POST.get('nombre')
+        '''nombre = request.POST.get('nombre')
         categoria = int(request.POST.get('categoria'))
         unidades_medidas = int(request.POST.get('unidad'))
         cantidad = int(request.POST.get('cantidad'))
         precio_compra = float(request.POST.get('precio_compra'))
         precio_venta = float(request.POST.get('precio_venta'))
         Pbodega = int(request.POST.get('bodega'))
-        bodega = Bodega.objects.get(pk=Pbodega)
+        bodega = Bodega.objects.get(pk=Pbodega)'''
+        nombre = request.POST.get('nombre')
+        categoria = int(request.POST.get('categoria'))
+        unidades_medidas = int(request.POST.get('unidad'))
+        proveedor = request.POST.get('proveedor')
+        precio = int(request.POST.get('precio'))
+        ordenCompra = request.POST.get('ordenCompra')
+        Ibodega = int(request.POST.get('bodega'))
+        bodega = Bodega.objects.get(pk=Ibodega)
+        stock = request.POST.get('cantidad')
 
-        if Producto.objects.filter(nombre__contains=nombre) and Producto.objects.filter(bodega=bodega, nombre=nombre):
+        if Producto.objects.filter(nombre__contains=nombre) and Producto.objects.filter( nombre=nombre):
 
             data = Producto.objects.all().order_by('nombre')
             q = request.GET.get('q')
@@ -100,8 +109,18 @@ def nuevoProducto(request):
             messages.add_message(request,messages.INFO, msj)
             return render(request, 'bodega/nuevoProducto.html', ctx)
 
-        p = Producto(nombre=nombre, categoria=categoria, unidades_medidas=unidades_medidas, cantidad=cantidad, precio_compra=precio_compra, precio_venta=precio_venta,bodega=bodega)
+        p = Producto(nombre=nombre, categoria=categoria, unidades_medidas=unidades_medidas, proveedor=proveedor, precio=precio, ordenCompra=ordenCompra)
         p.save()
+
+        productosId = Producto.objects.filter(nombre=nombre)
+        print(productosId)
+        Inombre = int(productosId.id)
+        print(Inombre)
+        producto = Producto.objects.get(pk=Inombre)
+        print(producto)
+        iv = Inventarios_Bodega(producto=producto, bodega=bodega, stock=stock)
+        iv.save()
+
         msj = 'El producto ha sido registrado correctamente.'
         messages.add_message(request,messages.INFO, msj)
         
@@ -121,10 +140,10 @@ def nuevoProducto(request):
             productos = Producto.objects.filter(nombre__startswith=q).order_by('nombre')
         elif Producto.objects.filter(cantidad__startswith=q):
             productos = Producto.objects.filter(cantidad__startswith=q).order_by('cantidad')
-        elif Producto.objects.filter(precio_compra__startswith=q):
-            productos = Producto.objects.filter(precio_compra__startswith=q).order_by('precio_compra')
-        elif Producto.objects.filter(precio_venta__startswith=q):
-            productos = Producto.objects.filter(precio_venta__startswith=q).order_by('precio_venta')
+        elif Producto.objects.filter(precio__startswith=q):
+            productos = Producto.objects.filter(precio__startswith=q).order_by('precio')
+        elif Producto.objects.filter(proveedor__startswith=q):
+            productos = Producto.objects.filter(proveeder__startswith=q).order_by('proveedor')
         else:
             productos_choices = Producto.objects.all()
             productos = ""
@@ -133,17 +152,20 @@ def nuevoProducto(request):
                     productos = Producto.objects.filter(categoria__startswith=x.categoria).order_by('categoria')
                 elif x.get_unidades_medidas_display().startswith(q):
                     productos = Producto.objects.filter(unidades_medidas__startswith=x.unidades_medidas).order_by('unidades_medidas')
-                elif str(x.bodega).startswith(q):
-                    productos = Producto.objects.filter(bodega=x.bodega).order_by('bodega')
                 elif productos == "":
                     productos = Producto.objects.all().order_by('nombre')
 
     else:
         productos = Producto.objects.all().order_by('nombre')
+        
+
+    inventario = Inventarios_Bodega.objects.all()
+
     ctx ={
         'productos': productos,
         'q': q,
         'bodega': Bodega.objects.all(),
+        'inventario': inventario,
     }
     return render(request, 'bodega/nuevoProducto.html', ctx)
 
@@ -216,27 +238,50 @@ def actualizarProducto(request, id):
 
 
 @login_required
-def modificarProducto(request, id):
-    p = get_object_or_404(Producto, pk=id)
+def modificarProducto(request, id, id_bodega):
+    
+    dicti ={'p': id, 'b': id_bodega}
+    p = dicti.get('p')
+    print(dicti)
+    ip = get_object_or_404(Inventarios_Bodega, producto=dicti.get('p'), bodega=dicti.get('b'))
+    print(ip)
+    ib = get_object_or_404(Inventarios_Bodega, bodega=dicti.get('b') , producto=dicti.get('p'))
+    print(ib)
+
+    productos = Producto.objects.filter(pk=dicti.get('p'))
+    inventBodegas  = Inventarios_Bodega.objects.filter(producto=dicti.get('p'))
+
 
     if request.method == 'POST':
-        nombre = request.POST.get('nombre')
+        '''nombre = request.POST.get('nombre')
         categoria = int(request.POST.get('categoria'))
         unidades_medidas = int(request.POST.get('unidad'))
         cantidad = int(request.POST.get('cantidad'))
         precio_compra = float(request.POST.get('precio_compra'))
         precio_venta = float(request.POST.get('precio_venta'))
         Pbodega = int(request.POST.get('bodega'))
-        bodega = Bodega.objects.get(pk=Pbodega)
+        bodega = Bodega.objects.get(pk=Pbodega)'''
+        nombre = request.POST.get('nombre')
+        categoria = int(request.POST.get('categoria'))
+        unidades_medidas = int(request.POST.get('unidad'))
+        precio = float(request.POST.get('precio'))
+        ordenCompra = request.POST.get('ordenCompra')
+        
+        Ibodega = int(request.POST.get('bodega'))
+        bodega = Bodega.objects.get(pk=Ibodega)
+        stock = int(request.POST.get('cantidad'))
 
-        p.nombre = nombre
-        p.categoria = categoria
-        p.unidades_medidas = unidades_medidas
-        p.cantidad = cantidad
-        p.precio_compra = precio_compra
-        p.precio_venta = precio_venta
-        p.bodega = bodega
-        p.save()
+        productos.nombre = nombre
+        productos.categoria = categoria
+        productos.unidades_medidas = unidades_medidas
+        productos.precio = precio
+        productos.ordenCompra = ordenCompra
+        productos.save()
+
+        inventBodegas.producto = productos.id
+        inventBodegas.bodega = bodega.id
+        inventBodegas.stock = stock
+        inventBodegas.save()
         
         msj = 'El producto ha sido actualizado correctamente.'
         messages.add_message(request,messages.INFO, msj)
@@ -250,6 +295,7 @@ def modificarProducto(request, id):
 
     data = Producto.objects.all().order_by('nombre')
     bodega = Bodega.objects.all()
+    
     ctx = {
         'productos': data,
         'bodega':bodega,

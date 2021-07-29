@@ -46,37 +46,43 @@ Nuevo Producto
                         <option id="uni" value="{{p.unidades_medidas}}" hidden></option>
                     </select>
                 </div>
-
+                
                 <div class="mb-3">
-                    <label for="precioVenta">Precio de Venta</label><br>
-                    <input type="number" value="{{p.precio_venta}}" step="0.01" name="precio_venta" id="precio_venta" class="form-control" required>
+                    <label for="proveedor">Proveedor</label><br>
+                    <input type="text" value="{{p.proveedor}}" name="proveedor" id="proveedor" class="form-control" required>
                 </div>
 
                 <div class="mb-3">
-                    <label for="precioCompra">Precio de Compra</label><br>
-                    <input type="number" value="{{p.precio_compra}}" step="0.01" name="precio_compra" id="precio_compra" class="form-control" required>
+                    <label for="precio">Precio de Venta</label><br>
+                    <input type="text" value="{{p.precio}}" step="0.01" name="precio" id="precio" class="form-control" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="cantidad">Cantidad</label><br>
-                    <input type="number" value="{{p.cantidad}}" name="cantidad" id="cantidad" class="form-control" required>
+                    <input type="text" value="{{p.cantidad}}" name="cantidad" id="cantidad" class="form-control" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="bodega">Bodega</label><br>
-                    <select name="bodega" id="bodega" class="form-control">
-                        {% if p %}
-                            {% for b in bodega %}
-                                {% if p.bodega == b %}
-                                    <option value="{{b.id}}">Nombre:{{b.nombre}} - Capacidad:{{b.capacidad}}</option>
-                                {% endif %}
-                            {% endfor %}
-                        {% else %}
-                            {% for b in bodega %}
-                                <option value="{{b.id}}">Nombre:{{b.nombre}} - Capacidad:{{b.capacidad}}</option>
-                            {% endfor %}
-                        {% endif %}
+                    <select name="bodega" id="bodega" class="form-select">
+                        <option value="">Seleccione Bodega</option>
+                            {% if p %}
+                                {% for b in bodega %}
+                                    {% if b.bodega == i %}
+                                        <option value="{{i.id}}">{{i.nombre}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                {% for b in bodega %}
+                                    <option value="{{b.id}}">{{b.nombre}}</option>
+                                {% endfor %}
+                            {% endif %}
                     </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="ordenCompra">Orden de Compra</label><br>
+                    <input type="text" value="{{p.ordenCompra}}" name="ordenCompra" id="ordenCompra" class="form-control" required>
                 </div>
 
                 <div class="mb-3">
@@ -101,31 +107,40 @@ Nuevo Producto
             <table class="table table-hover table-dark table-striped">
                 <thead>
                     <tr>
-                        <th>Producto</th>
-                        <th>Categoria</th>
-                        <th>Unidad de Medida</th>
-                        <th>Precio de Venta</th>
-                        <th>Precio de Compra</th>
-                        <th>Cantidad</th>
-                        <th>Bodega</th>
+                        <th class="text-center">Producto</th>
+                        <th class="text-center">Categoria</th>
+                        <th class="text-center">Unidad de Medida</th>
+                        <th class="text-center">Proveedor</th>
+                        <th class="text-center">Precio de Venta</th>
+                        <th class="text-center">Orden de Compra</th>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-center">Bodega</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
 
-                    {% for p in productos%}
-                    <tr data-href="{% url 'inventario:modificarProducto' p.id %}" style="cursor: pointer;">
-                        <td>{{p.nombre}}</td>
-                        <td>{{p.get_categoria_display}}</td>
-                        <td>{{p.get_unidades_medidas_display}}</td>
-                        <td>{{p.precio_venta}}</td>
-                        <td>{{p.precio_compra}}</td>
-                        <td>{{p.cantidad}}</td>
-                        <td>{{p.bodega}}</td>
-                    </tr>
+                    {% for i in inventario %}
+                        <tr data-href="{% url 'inventario:modificarProducto' i.producto.id i.bodega.id %}" style="cursor: pointer;">
+                            {% for p in productos  %}
+                                {% if p.id == i.producto.id  %}
+                                    <td class="text-center">{{p.nombre}}</td>
+                                    <td class="text-center">{{p.get_categoria_display}}</td>
+                                    <td class="text-center">{{p.get_unidades_medidas_display}}</td>
+                                    <td class="text-center">{{p.proveedor}}</td>
+                                    <td class="text-center">{{p.precio}}</td>
+                                    <td class="text-center">{{p.ordenCompra}}</td>
+                                {% endif %}
+                            {% endfor %}
+                            <td class="text-center">{{i.stock}}</td>
+                            <td class="text-center">{{i.bodega}}</td>
+
+                            
+                        </tr>
                     {% empty %}
-                    <tr>
-                        <td colspan="10" class="text-danger text-center">No se encontraron resultados</td>
-                    </tr>
+                        <tr>
+                            <td colspan="10" class="text-danger text-center">No se encontraron resultados</td>
+                        </tr>
                     {% endfor %}
                 </tbody>
             </table>
@@ -154,6 +169,6 @@ Nuevo Producto
             });
         }, 3000)
 
-    });
+        });
     </script>
 {% endblock js %}

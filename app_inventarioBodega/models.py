@@ -48,7 +48,7 @@ class Producto(models.Model):
     ordenCompra = models.CharField(max_length=10)
 
     def __str__(self):
-        return f'{self.nombre} - {self.categoria} - {self.precio}'
+        return f'{self.id} {self.nombre} - {self.categoria} - {self.precio}'
 
 class Bodega(models.Model):
 
@@ -58,7 +58,7 @@ class Bodega(models.Model):
    
 
     def __str__(self):
-        return self.nombre
+        return f'{self.id} {self.nombre}'
 
 class Inventarios_Bodega(models.Model):
     bodega = models.ForeignKey(Bodega, on_delete=models.CASCADE)

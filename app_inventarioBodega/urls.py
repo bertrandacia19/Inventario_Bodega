@@ -10,7 +10,7 @@ urlpatterns = [
     path('nuevoProducto/',views.nuevoProducto, name="nuevoProducto"),
     path('cantidadProducto/<int:id>/actualizar', views.actualizarProducto , name="actualizarProducto"),
     path('cantidadProducto/',views.cantidadProducto, name="cantidadProducto"),
-    path('nuevoProducto/<int:id>/modificar', views.modificarProducto , name="modificarProducto"),
+    path('nuevoProducto/<int:id>/<int:id_bodega>/modificar', views.modificarProducto , name="modificarProducto"),
     path('transferencia/', views.transferencia, name='transferencia'),
     path('clientes/', views.clientes, name='clientes'),
 ]
