@@ -111,24 +111,7 @@ class Venta(models.Model):
 class DetalleFactura(models.Model):
 
     ordenVenta = models.ForeignKey(Venta, on_delete=models.CASCADE)
-    producto = models.ForeignKey(Producto,related_name="productos" ,on_delete=models.CASCADE)
-    cantidadProducto = models.FloatField()
-    PrecioProducto = models.FloatField()
-    subTotal = models.FloatField()
+    detalle_venta = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return f'{self.ordenVenta}'
-
-class Venta(models.Model):
-
-    ordenVenta = models.CharField(max_length=5)
-    producto = models.ForeignKey(Producto,related_name="productos" ,on_delete=models.CASCADE)
-    cantidadProducto = models.IntegerField()
-    PrecioProducto = models.IntegerField()
-    descuento = models.FloatField(null=False, blank=False)
-    subTotal = models.FloatField()
-    totalVenta = models.FloatField()
-    fecha = models.DateField()
-
-    def _str_(self):
-        return f'{self.ordenVenta}'
+        return f'{self.ordenVenta} {self.detalle_venta}'

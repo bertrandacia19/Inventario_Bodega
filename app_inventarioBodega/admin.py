@@ -24,7 +24,7 @@ class ClienteAdmin(admin.ModelAdmin):
     list_display = ('id', 'nombre', 'apellido')
 
 class DetalleFacturaAdmin(admin.ModelAdmin):
-    list_display = ('id', 'ordenVenta', 'subTotal')
+    list_display = ('id', 'ordenVenta', 'detalle_venta')
 
 
 

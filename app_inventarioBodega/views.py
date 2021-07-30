@@ -406,6 +406,7 @@ def venta(request):
 
     empleados = Empleado.objects.all().order_by('nombre')
     clientes = Cliente.objects.all().order_by('nombre')
+    descripcion = request.POST.get('resumen')
     
     if request.method == 'POST':
         try:
@@ -419,6 +420,8 @@ def venta(request):
                 totalVenta = request.POST.get('total')
 
                 Venta.objects.create(fecha=fecha,cliente=cliente,empleado=empleado,subTotal=subTotal,isv=ISV,total=totalVenta)
+                venta = Venta.objects.get(total=totalVenta)
+                DetalleFactura.objects.create(ordenVenta=venta, detalle_venta=descripcion)
                 messages.add_message(request, messages.INFO,  f'VENTA REALIZADA EXITOSAMENTE')
 
         except Exception as e:

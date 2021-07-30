@@ -37,6 +37,7 @@
                 </tbody>
             </table>
         </div>
+        
         <div class="col-3">
             <h2>Datos Factura</h2>
             <form action="{% url 'inventario:venta' %}" method="POST" id="frm-venta">
@@ -46,6 +47,7 @@
                     <input type="date" name="fecha" id="fecha" class="form-control" required autofocus  readonly>
                 </div>
                 <p>
+                    <p id="resumen" name="resumen" style="display:none;"></p>
                     <label for="clientes">Cliente</label>
                     <select name="clientes" id="clientes" class="form-select form-control-chosen">
                         {% for c in clientes %}
@@ -75,9 +77,6 @@
                 </div>
                 <div class="mb-3">
                       <input type="submit" class="btn cards"  value="Pagar">
-                </div>
-                <div class="mb-3">
-                    <input type="submit" class="btn cards" value="Cancelar">
                 </div>
             </form>
         </div>
@@ -121,13 +120,12 @@
                     }
                     productosAgregado.push(res);
                     var html = '<tr>';
-                    html += `<td>${res.nombre}</td>`;
+                    html += `<td class="nombre_p">${res.nombre}</td>`;
                     html += `<td>${res.categoria}</td>`;
                     html += `<td><input type="number" value="${res.precio}" name="precio" class="precio" id="precio" style="width: 100%;" readonly></td>`;
                     html += `<td style="width: 135px;"><input type="number"  min="1" step="any" name="cantidad" class="cantidad" id="cantidad" onchange="prueba()" style="width: 100%;"></td>`;
                     html += `<td style="width: 135px;"><input type="number" name="subtotal" class="subTotal" id="subTotal" style="width: 100%;" readonly></td>`;
-                    html += `<td><input type="button" value="Delete" onclick="deleteRow(this)"/></td>
-`;
+                    html += `<td><input type="button" value="Delete" onclick="deleteRow(this)"/></td>`;
                     html += '</tr>';
 
                     $('#tabla').append(html)
@@ -135,18 +133,20 @@
                 //return false;
             });
         });
-
         function prueba()
         {
             var  subtotal = 0.00;
             let subTotal = document.getElementsByClassName("subTotal")
             let cantidad = document.getElementsByClassName("cantidad")
             let precio = document.getElementsByClassName("precio")
+            let nombre_p = document.getElementsByClassName("nombre_p")
             
-            for (var i = 0; i < precio.length; i++) 
+            for (var i = 0; i < precio.length; i++)
             {
                 subTotal.item(i).value = parseInt(cantidad.item(i).value) * parseFloat(precio.item(i).value)
                 subtotal +=parseInt(cantidad.item(i).value) * parseFloat(precio.item(i).value)
+                var text = document.getElementById("resumen").textContent+="Nombre del producto: "+nombre_p.item(i).innerText + "- Cantidad del producto: " + cantidad.item(i).value + "- Precio del producto: " + precio.item(i).value + "-  Subtotal del producto: " + subTotal.item(i).value + "" 
+                
             }
             let st=document.getElementById("subtotal")
             st.value=subtotal
@@ -156,6 +156,8 @@
             //se carga el total en el campo correspondiente
             Total=subtotal+ISV
             $("input[name=total]").val(Total);
+
+
         }
 
      $(function () 
